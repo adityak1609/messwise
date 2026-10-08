@@ -1,5 +1,6 @@
 param(
-    [string]$Region = 'us-east-1'
+    [string]$Region = 'us-east-1',
+    [switch]$Remote
 )
 
 $ErrorActionPreference = 'Stop'
@@ -25,7 +26,13 @@ $env:AWS_PAGER = ''
 $env:AWS_CLI_AUTO_PROMPT = 'off'
 
 Write-Host 'Complete the AWS sign-in in your browser. Choose the account where you want MessWise deployed.'
-& $awsCliPath login --profile messwise --region $Region --no-cli-pager
+$loginArguments = @('login', '--profile', 'messwise', '--region', $Region, '--no-cli-pager')
+if ($Remote) {
+    $loginArguments += '--remote'
+    Write-Host 'Open the AWS link printed below, then paste the authorization code into THIS terminal window.'
+    Write-Host 'The code goes directly to the AWS CLI. Keep it out of chat.'
+}
+& $awsCliPath @loginArguments
 if ($LASTEXITCODE -ne 0) { throw 'AWS login did not complete. No resources have been deployed.' }
 & $awsCliPath configure set region $Region --profile messwise
 if ($LASTEXITCODE -ne 0) { throw 'Could not save the selected deployment region.' }
