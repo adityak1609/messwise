@@ -2,6 +2,12 @@
 
 This guide turns the local app into an AWS-backed app. The console route below works with website sign-in and needs no AWS access keys on your laptop. Choose one AWS region and use it for every backend resource. The files have been prepared locally; they do not create resources until you deploy them.
 
+## Let the coding assistant deploy
+
+AWS CLI v2.32.0 and newer support [browser login using your existing AWS console account](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sign-in.html). On Windows, run `./scripts/Connect-Aws.ps1` from the project folder and complete sign-in in your browser. The helper uses an installed CLI or the official portable CLI prepared under `.tools/awscli/portable`. Its default region is `us-east-1`; select the account intended for this project.
+
+The helper creates a separate `messwise` profile, keeps its temporary login/configuration under the Git-ignored `.tools/aws-session` directory, and verifies the selected identity. It does not request long-term access keys or overwrite the computer's default AWS profile. Authentication requires your browser interaction. After successful sign-in, the assistant can use that profile to deploy the prepared packages, configure the frontend, and set up hosting. A successful login alone does not deploy anything.
+
 ## Website-only deployment
 
 ### 1. Upload the API package to S3
