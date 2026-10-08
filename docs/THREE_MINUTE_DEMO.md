@@ -1,16 +1,17 @@
 # MessWise demo: target 2 minutes 45 seconds
 
-Rehearse once and keep the final upload under three minutes. Use real mess figures only when you have their source and coverage. If showing sample data, keep its sample label visible and say that it is illustrative. Do not replace a missing field result with a made-up success claim.
+Use a deployed AWS workspace and real, permitted mess data. Prepare a pair with both human reviews already saved, and another pair with both model runs completed. Keep the sample labels and real n visible. Rehearse actual inference latency so the final video stays under three minutes.
 
 | Time | Show | Suggested narration |
 | --- | --- | --- |
-| 0:00–0:20 | Dashboard and a permitted photo of the waste notice | “Our mess already publishes daily food-waste weights. MessWise connects those numbers to the menu, evidence, and an action to review.” |
-| 0:20–0:55 | Add a daily record: date, kg, menu, scope, meal coverage, and source photo | “This figure comes from the mess notice. We record exactly what it covers. Attendance is optional, and a denominator is named whenever we use one.” |
-| 0:55–1:25 | Dashboard/history; open the saved record and a supporting plate photo | “The trend preserves the original measurements. Friends' plate photos add context; they do not estimate grams or prove which dish caused a day's total.” |
-| 1:25–1:45 | Record a proposed action and its status/follow-up | “Staff can record a change to try and return to later measurements. Any observed difference needs comparable coverage and does not establish causation.” |
-| 1:45–2:25 | Save in AWS mode, refresh, then show that record in DynamoDB and a recent Lambda invocation in CloudWatch | “Cognito authenticates this session. API Gateway invokes Lambda to store this record in DynamoDB; photos are private in S3. Here is the saved record and the request running on AWS.” |
-| 2:25–2:45 | Return to app, show repository link or closing card | “The pilot needs only a dated waste figure and menu. During the event I built the logging workflow, evidence view, action tracking, and AWS integration. The next step is collecting comparable follow-up data with mess staff.” |
+| 0:00–0:15 | Published waste notice and dashboard | Our mess already publishes daily waste kilograms. MessWise connects that number to its menu, evidence, and a follow-up action. |
+| 0:15–0:40 | Save a real daily entry in AWS mode; refresh | We record the published weight and what it covers. Attendance stays optional. |
+| 0:40–1:05 | Plate pilot: before/after images, dish list, two locked human reviews | Two people independently score the original serving left in quarter steps. Ratings are saved before the model; unclear dishes can be marked cannot assess. |
+| 1:05–1:35 | Run Bedrock scoring on the prepared pair; show the returned result | Lambda sends the paired images and dish names to Nova Lite on Bedrock. Human scores and student feedback are withheld. Daily kilograms still come from the mess notice. |
+| 1:35–2:00 | Pilot comparison table and the prepared repeated pair | Here are actual plate and dish-rating counts, exact agreement, agreement within one step, and excluded cases. The second run checks repeatability. Dishes on one plate are related observations. |
+| 2:00–2:30 | DynamoDB saved entry/pair and CloudWatch scored request metadata | These records are persisted in DynamoDB. This log shows a real Bedrock request, its model and prompt version, and token usage. Photos are private in S3. |
+| 2:30–2:45 | Action status and repository link | Students' comments help explain leftovers. Staff can record an action to try and review later measurements. Sustained waste reduction remains to be measured. |
 
-Replace the final sentence with what you actually completed during the event. Only name services shown working in the deployed build. If deployment is not working, fix that before the submission recording; a diagram alone does not meet the AWS demonstration requirement.
+Only show evaluation numbers collected from the real pilot. Resolve model access and deployment before recording. Show the actual returned result and scored CloudWatch log; a health check or architecture diagram does not demonstrate inference. Show saved human reviews and explain the collection order instead of typing both during the video.
 
-Before upload: remove credentials and identifying faces, check readability on a phone, verify the duration, upload to YouTube as public or unlisted, then open the link in a signed-out browser. Paste that exact link into the event's own submission form before its displayed deadline.
+Record the smallest console areas needed to show AWS working. Exclude credentials and identifying faces, verify readability on a phone, upload to YouTube as public or unlisted, and open the final link signed out. Submit the repository, video, and verified writeup through the event's own form before its displayed deadline.

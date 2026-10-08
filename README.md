@@ -42,6 +42,12 @@ Attendance is optional. Grams per meal served is `waste kg × 1000 ÷ meal servi
 
 Daily waste cannot be attributed to a particular dish from a daily menu alone. A before/after change is an observation, not evidence that an action caused a reduction. The app does not calculate money, carbon, compost, or biogas savings from unverified factors. Recording amounts and reasons is consistent with [EPA food-waste assessment guidance](https://www.epa.gov/sustainable-management-food/tools-preventing-and-diverting-wasted-food).
 
+## Optional plate pilot
+
+**Plate pilot** stores before/after photo pairs separately from daily measurements. Two people rate each served dish in quarter steps (or "cannot assess") before an optional Amazon Bedrock request. Human ratings are locked, the model receives no human scores or student feedback, and a second run checks repeatability. The evaluation reports plate and dish counts, exact/within-step agreement, and excluded unclear observations. Local mode supports the collection and human-review flow; Bedrock requires the AWS deployment.
+
+Start with five pairs. See the [pilot protocol and evaluation guide](docs/PLATE_PILOT.md). Scores are experimental visual estimates and do not produce grams. JSON exports contain ratings and model provenance; image files are separate.
+
 ## AWS path
 
 The repository includes a deployment template; deployment to an account is a separate step. Local mode does not demonstrate AWS use.
@@ -55,6 +61,7 @@ flowchart LR
   Lambda --> S3[Private S3 photo bucket]
   Browser -->|Presigned photo upload| S3
   Lambda --> Logs[CloudWatch logs]
+  Lambda -->|Optional paired-photo scoring| Bedrock[Amazon Bedrock / Nova Lite]
 ```
 
 The backend uses Node.js 22. Cognito restricts account creation to administrators; API requests are authenticated and each user's data is isolated. Photos use short-lived signed access. See [AWS deployment](docs/AWS_DEPLOYMENT.md) for setup and validation.

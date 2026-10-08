@@ -4,11 +4,14 @@ import { DynamoDBDocumentClient, QueryCommand, GetCommand, TransactWriteCommand 
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { BedrockRuntimeClient } from '@aws-sdk/client-bedrock-runtime';
+import { createPilotHandler, MODEL_ID } from './pilot.mjs';
 import { MAX_PHOTO_BYTES, PHOTO_TYPES, ValidationError, validateId, validateRecord, validatePhotoKey, validateUpload } from './validation.mjs';
 const response = (statusCode, value) => ({statusCode, headers: {'content-type': 'application/json', 'cache-control': 'no-store'}, ...(statusCode === 204 ? {} : {body: JSON.stringify(value)})});
 function body(event) { if (!event.body || event.body.length > 150000) throw new ValidationError('Provide a JSON body under 150 KB.'); try { return JSON.parse(event.isBase64Encoded ? Buffer.from(event.body, 'base64').toString('utf8') : event.body); } catch { throw new ValidationError('Request body must be valid JSON.'); } }
 function recordOf(item) { return {...item.record, createdAt:item.createdAt, updatedAt:item.updatedAt}; }
-export function createHandler({db, s3, table, bucket, presignPost = createPresignedPost, signUrl = getSignedUrl}) {
+export function createHandler({db, s3, table, bucket, bedrock, scoringEnabled = false, bedrockRegion = 'us-east-1', presignPost = createPresignedPost, signUrl = getSignedUrl}) {
+const pilot = createPilotHandler({db, s3, table, bucket, bedrock, enabled: scoringEnabled});
 return async function handler(event, context) {
   const requestId = event.requestContext?.requestId ?? context?.awsRequestId ?? 'unknown';
   // API Gateway validates JWT signature, issuer, expiry, and audience before invocation.
@@ -16,8 +19,9 @@ return async function handler(event, context) {
   if (typeof userId !== 'string' || !/^[a-zA-Z0-9-]{1,128}$/.test(userId)) return response(401, {message:'Sign in to use AWS storage.', requestId});
   const pk = 'USER#' + userId;
   try {
+    if (['GET /plate-pairs', 'PUT /plate-pairs/{id}', 'DELETE /plate-pairs/{id}', 'POST /plate-pairs/{id}/score'].includes(event.routeKey)) return await pilot(event, {userId, requestId, response, body});
     switch (event.routeKey) {
-      case 'GET /health': return response(200, {mode:'aws', service:'MessWise', requestId});
+      case 'GET /health': return response(200, {mode:'aws', service:'MessWise', requestId, pilot:{enabled:scoringEnabled, modelId:MODEL_ID, region:bedrockRegion}});
       case 'GET /records': {
         const items = []; let cursor;
         do { const page = await db.send(new QueryCommand({TableName:table, KeyConditionExpression:'pk = :pk AND begins_with(sk, :prefix)', ExpressionAttributeValues:{':pk':pk, ':prefix':'RECORD#'}, ExclusiveStartKey:cursor, ConsistentRead:true})); items.push(...(page.Items ?? [])); cursor = page.LastEvaluatedKey; } while (cursor);
@@ -59,6 +63,7 @@ return async function handler(event, context) {
     }
   } catch (error) {
     if (error instanceof ValidationError) return response(400, {message:error.message, requestId});
+    if (['ConditionalCheckFailedException', 'PilotConflict'].includes(error?.name)) return response(409, {message:error.name === 'PilotConflict' ? error.message : 'This plate pair changed. Reload and try again.', requestId});
     if (error?.name === 'TransactionCanceledException') return response(409, {message:'There is already an entry for this date, or this record changed. Reload records and try again.', requestId});
     console.error(JSON.stringify({requestId, route:event.routeKey, errorName:error?.name ?? 'Error'}));
     return response(500, {message:'AWS could not complete the request. Try again.', requestId});
@@ -68,4 +73,6 @@ return async function handler(event, context) {
 export const handler = createHandler({
   db: DynamoDBDocumentClient.from(new DynamoDBClient({}), { marshallOptions: { removeUndefinedValues: true } }),
   s3: new S3Client({}), table: process.env.RECORDS_TABLE, bucket: process.env.PHOTOS_BUCKET,
+  bedrock: new BedrockRuntimeClient({region:process.env.BEDROCK_REGION ?? 'us-east-1', maxAttempts:1}),
+  scoringEnabled: process.env.ENABLE_PLATE_SCORING === 'true', bedrockRegion: process.env.BEDROCK_REGION ?? 'us-east-1',
 });

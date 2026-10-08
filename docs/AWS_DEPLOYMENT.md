@@ -21,10 +21,14 @@ Use stack name `messwise-pilot` and set:
 | `CodeBucket` | The S3 code bucket you just created. |
 | `CodeKey` | Exact uploaded API ZIP filename; the generated default matches this build. |
 | `AllowedOrigin` | `http://127.0.0.1:5173` for the first local check. |
+| `EnablePlateScoring` | `true` to enable the optional Bedrock pilot, or `false` for the daily tracker alone. |
+| `BedrockRegion` | Default `us-east-1`, where Nova Lite supports in-region inference. This is where plate images are processed. |
 
 Leave optional settings at their defaults. Review the resources, acknowledge IAM resource creation and the SAM transform if prompted, and create the stack. Wait for `CREATE_COMPLETE`; if it fails, inspect the first failure in **Events** before retrying. The stack creates Cognito, API Gateway, Lambda, DynamoDB, private S3 photo storage, and CloudWatch logging.
 
 Open the stack's **Outputs** tab. Keep `ApiUrl`, `ClientId`, `Region`, and `UserPoolId`. These are public app identifiers and can be shared with your coding assistant to configure the app. Do not share passwords or access keys.
+
+The Lambda role grants only `bedrock:InvokeModel` for the Nova Lite foundation model in `BedrockRegion`. The frontend never holds AWS service credentials. The paired-photo endpoint reads owned photos from private S3 and sends the two images to Bedrock. The stack's region and S3 code/photo buckets still stay together; only the model endpoint can use a different region. [AWS's Nova Lite model card](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-lite.html) lists supported modalities and in-region availability.
 
 ### 3. Create a pilot login and connect the app
 
@@ -119,8 +123,20 @@ All routes, including `GET /health`, require a Cognito bearer token.
 | `DELETE /records/{id}` | Delete a record. |
 | `POST /uploads` | Accept `{name, mimeType, sizeBytes}`; return `{key, uploadUrl, fields}` for a signed S3 form upload. |
 | `GET /photos?key=...` | Obtain a short-lived signed URL for an owned photo. |
+| `GET /plate-pairs` | List the signed-in user's paired-photo pilot records. |
+| `PUT /plate-pairs/{id}` | Create a pair or append a locked independent human review. Client-supplied model scores are never trusted. |
+| `POST /plate-pairs/{id}/score` | Run one Bedrock comparison after both human reviews; up to two saved runs and four attempts per pair. |
+| `DELETE /plate-pairs/{id}` | Remove the pair and evaluation ratings; private photos remain in storage. |
 
 Photo upload is a multipart POST containing the returned fields and file, not a raw PUT. Keep only the object key in the record, not an expiring signed URL.
+
+## Check the optional Bedrock pilot
+
+In Amazon Bedrock, switch to `BedrockRegion` (default `us-east-1`). In the Chat / Text playground select **Amazon Nova Lite**, and verify one small image prompt succeeds under your account before relying on it in the video. Amazon models do not require an AWS Marketplace subscription; account/role permissions and regional availability still apply. See [AWS model-access documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html). Use the foundation model `amazon.nova-lite-v1:0` directly in the configured in-region endpoint; this template does not grant cross-region inference-profile permissions.
+
+In the hosted AWS workspace, open **Plate pilot**, add a real before/after pair and its dish list, and have two different people save their ratings. Run scoring once, then repeat once. Verify results remain after reload, and show a CloudWatch log with `status: scored`, model ID, prompt version, and token usage. These logs contain no images, human aliases, or student comments. Human reviews remain available if scoring fails. A locally simulated test is not evidence that Bedrock inference worked in your account.
+
+When updating an already-deployed stack for this feature, upload the **new** Lambda ZIP and the **new** `stack-console.json`; update `CodeKey` to the new filename and preserve the hosted `AllowedOrigin`. The old API ZIP/template does not contain the pilot routes or Bedrock permission. Rebuild/upload the Amplify ZIP too. Follow the [pilot collection guide](PLATE_PILOT.md) for the small evaluation.
 
 ## Before recording
 

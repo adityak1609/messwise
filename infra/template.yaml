@@ -2,6 +2,16 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: MessWise private pilot API, Cognito sign-in, records, and photo evidence.
 Parameters:
+  EnablePlateScoring:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+    Description: Enable the optional paired-photo Bedrock pilot. Daily waste logging works either way.
+  BedrockRegion:
+    Type: String
+    Default: us-east-1
+    AllowedValues: [us-east-1, us-east-2, us-west-2, ap-northeast-1, ap-southeast-2, ap-southeast-3, me-central-1, eu-west-2]
+    Description: Nova Lite in-region endpoint. Plate images are processed in this region; it may differ from the stack region.
   AllowedOrigin:
     Type: String
     Default: http://127.0.0.1:5173
@@ -152,6 +162,9 @@ Resources:
                 Action: [s3:GetObject, s3:PutObject]
                 Resource: !Sub '${PhotosBucket.Arn}/users/*'
               - Effect: Allow
+                Action: bedrock:InvokeModel
+                Resource: !Sub 'arn:${AWS::Partition}:bedrock:${BedrockRegion}::foundation-model/amazon.nova-lite-v1:0'
+              - Effect: Allow
                 Action: [logs:CreateLogStream, logs:PutLogEvents]
                 Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${AWS::StackName}-api:*'
   ApiFunction:
@@ -164,13 +177,39 @@ Resources:
       Runtime: nodejs22.x
       Architectures: [arm64]
       MemorySize: 256
-      Timeout: 15
+      Timeout: 29
       Role: !GetAtt ApiRole.Arn
       Environment:
         Variables:
           RECORDS_TABLE: !Ref RecordsTable
           PHOTOS_BUCKET: !Ref PhotosBucket
+          BEDROCK_REGION: !Ref BedrockRegion
+          ENABLE_PLATE_SCORING: !Ref EnablePlateScoring
       Events:
+        ListPlatePairs:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /plate-pairs
+            Method: GET
+        SavePlatePair:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /plate-pairs/{id}
+            Method: PUT
+        DeletePlatePair:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /plate-pairs/{id}
+            Method: DELETE
+        ScorePlatePair:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /plate-pairs/{id}/score
+            Method: POST
         Health:
           Type: HttpApi
           Properties:
@@ -208,6 +247,10 @@ Resources:
             Path: /photos
             Method: GET
 Outputs:
+  PlateScoringRegion:
+    Value: !Ref BedrockRegion
+  PlateScoringEnabled:
+    Value: !Ref EnablePlateScoring
   ApiUrl:
     Value: !Sub 'https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com'
   UserPoolId:

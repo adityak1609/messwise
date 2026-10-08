@@ -43,7 +43,7 @@ export async function completePassword(challenge: Challenge, password: string) {
   rememberAuth(result);
 }
 
-async function request<T>(route: string, options: RequestInit = {}): Promise<T> {
+export async function request<T>(route: string, options: RequestInit = {}): Promise<T> {
   const session = getSession();
   if (!session) throw new Error('Your AWS session has ended. Sign in again from Data & AWS.');
   const response = await fetch(base + route, { ...options, headers: { Authorization: `Bearer ${session.idToken}`, 'Content-Type': 'application/json', ...options.headers } });

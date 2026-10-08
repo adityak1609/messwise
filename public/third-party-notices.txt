@@ -37,7 +37,9 @@ Food-waste measurement principles were informed by [EPA's food-waste assessment 
 
 ## AI assistance
 
-OpenAI Codex was used for project planning, implementation, and verification. The owner also used Claude for idea comparison and scope planning. This version does not use a runtime AI model to estimate food weight.
+OpenAI Codex was used for project planning, implementation, and verification. The owner also used Claude for idea comparison and scope planning. The optional plate pilot uses Amazon Nova Lite through Amazon Bedrock for coarse visual scores. Its output is not a measured food weight.
+
+The photo-scoring protocol was informed by [Ni et al.'s 2025 conference abstract](https://nsa-2025.p.asnevents.com.au/days/2025-12-04/abstract/129505) and [Parent et al. (2012)](https://experts.mcmaster.ca/scholarly-works/657546). The prompt, five-bin adaptation, collection UI, and evaluation calculations are original project work. These studies evaluated human rating methods, not this model.
 
 
 ----- react -----

@@ -1,5 +1,5 @@
 import type { WasteScope } from './domain';
-export type View = 'overview' | 'log' | 'photos' | 'actions' | 'settings';
+export type View = 'overview' | 'log' | 'photos' | 'pilot' | 'actions' | 'settings';
 export type Mode = 'demo' | 'local' | 'aws';
 export const scopeLabels: Record<WasteScope, string> = { plate: 'Plate waste', kitchen: 'Kitchen waste', combined: 'Combined waste', unknown: 'Scope unconfirmed' };
 export const statuses = { planned: 'Planned', in_progress: 'In progress', completed: 'Completed' };

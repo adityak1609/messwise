@@ -1,0 +1,33 @@
+.pilot-page { display: grid; gap: 20px; }
+.pilot-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.pilot-toolbar p { max-width: 520px; font-size: 14px; }
+.pilot-cloud-note { display: flex; align-items: flex-start; gap: 8px; color: #647260; font-size: 13px; line-height: 1.6; margin: 0; }
+.pilot-cloud-note svg { flex-shrink: 0; margin-top: 2px; }
+.pilot-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.pilot-metric { padding: 22px; display: grid; gap: 10px; }
+.pilot-metric span { font-size: 13px; color: #667061; }
+.pilot-metric strong { font-size: 32px; color: #244936; font-weight: 600; }
+.pilot-metric small { font-size: 11px; color: #7d8577; line-height: 1.5; }
+.pilot-page .card-heading { padding: 22px 24px 16px; display: flex; justify-content: space-between; gap: 12px; }
+.pilot-page .card-heading h2 { font-size: 18px; margin: 0 0 7px; }
+.pilot-page .card-heading p { color: #7c8577; font-size: 12px; margin: 0; line-height: 1.5; }
+.pilot-page table th, .pilot-page table td { white-space: normal; min-width: 110px; }
+.pilot-page table td:first-child { min-width: 180px; }
+.pilot-footnote { padding: 14px 24px 20px; margin: 0; color: #74816d; font-size: 12px; line-height: 1.7; }
+.pair-images { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+.pair-images figure { margin: 0; border: 1px solid #e3e8de; background: #f5f7f1; border-radius: 12px; overflow: hidden; }
+.pair-images figcaption { padding: 10px 14px; font-size: 12px; font-weight: 600; color: #3b553d; }
+.pair-image { width: 100%; height: 250px; object-fit: contain; display: block; background: #eef2e7; }
+.pilot-review-form { margin-top: 24px; }
+.pilot-review-form h3 { font-size: 19px; margin: 0 0 10px; }
+.pilot-review-form > p { font-size: 13px; line-height: 1.7; }
+.pilot-rating-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+.pilot-review-complete { display: flex; gap: 8px; align-items: center; color: #42643d; padding: 18px 0; font-size: 14px; }
+.pilot-feedback { padding: 13px 16px; border-radius: 8px; background: #f6f4e9; color: #685b3b; font-size: 13px; line-height: 1.6; }
+.pilot-score-controls { margin-top: 22px; }
+.pilot-provenance { font-size: 12px; color: #697762; margin-top: 18px; line-height: 1.7; overflow-wrap: anywhere; }
+.pilot-provenance summary { cursor: pointer; padding: 8px 0; font-weight: 600; }
+.pilot-provenance p { border-top: 1px solid #e4e8df; padding-top: 12px; }
+.capitalize { text-transform: capitalize; }
+@media (max-width: 1050px) { .pilot-toolbar { align-items: flex-start; flex-direction: column; } .pilot-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 550px) { .pair-images, .pilot-rating-fields { grid-template-columns: 1fr; } .pair-image { height: 220px; } .pilot-metric { padding: 16px; } .pilot-metric span { font-size: 12px; } .pilot-toolbar .button-row { flex-wrap: wrap; } }
