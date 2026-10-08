@@ -20,7 +20,7 @@ export type WasteRecord = {
   wasteKg: number;
   scope: WasteScope;
   coverage: string;
-  menu: { breakfast: string; lunch: string; dinner: string };
+  menu: { breakfast: string; lunch: string; dinner: string; snacks?: string };
   attendance?: number;
   notes: string;
   photos: Photo[];
@@ -74,6 +74,7 @@ export function validRecord(value: unknown): string | null {
   for (const meal of ['breakfast', 'lunch', 'dinner']) {
     if (!isText(value.menu[meal], 1000)) return 'Each menu entry must be text under 1,000 characters.';
   }
+  if (value.menu.snacks !== undefined && !isText(value.menu.snacks, 1000)) return 'The snack menu must be text under 1,000 characters.';
   if (value.attendance !== undefined && (
     typeof value.attendance !== 'number' ||
     !Number.isSafeInteger(value.attendance) ||

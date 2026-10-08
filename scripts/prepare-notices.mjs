@@ -12,4 +12,6 @@ for (const [name, file] of packages) {
   notices += `\n\n----- ${name} -----\n\n`;
   notices += await readFile(path.join(root, 'node_modules', name, file), 'utf8');
 }
+notices += '\n\n----- fc-menu menu source -----\n\n';
+notices += await readFile(path.join(root, 'docs', 'licenses', 'fc-menu-MIT.txt'), 'utf8');
 await writeFile(path.join(root, 'public', 'third-party-notices.txt'), notices);

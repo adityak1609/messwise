@@ -74,3 +74,28 @@ it('shows two separate model results, abstentions, and repeatability in a simula
   const row = screen.getByText('Repeatability: run 1 vs run 2').closest('tr')!;
   expect(within(row).getByText('0/1 (0%)')).toBeTruthy(); expect(within(row).getByText('1/1 (100%)')).toBeTruthy(); expect(within(row).getByText('1/2')).toBeTruthy();
 });
+
+it('offers the linked menu by date and meal and records only chosen plate dishes', async () => {
+  const user = userEvent.setup(); render(<PlatePilot mode="local" photoRepo={localRepository} onStart={() => {}} />);
+  await user.click(await screen.findByRole('button', { name: 'Add plate pair' }));
+  fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-10-08' } });
+  const dishInput = screen.getByLabelText(/Dishes on this plate/) as HTMLTextAreaElement;
+  expect(dishInput.value).toBe('');
+  await user.click(screen.getByRole('button', { name: 'Select menu dish Rajma Masala' }));
+  await user.click(screen.getByRole('button', { name: 'Select menu dish Plain Rice' }));
+  expect(dishInput.value).toBe('Rajma Masala, Plain Rice');
+  await user.click(screen.getByRole('button', { name: 'Select menu dish Rajma Masala' }));
+  expect(dishInput.value).toBe('Plain Rice');
+  await user.selectOptions(screen.getByLabelText('Meal'), 'breakfast');
+  expect(screen.queryByRole('button', { name: 'Select menu dish Rajma Masala' })).toBeNull();
+  expect(screen.getByRole('button', { name: 'Select menu dish Boiled Egg' })).toBeTruthy();
+  expect(screen.getByRole('button', { name: 'Select menu dish Banana' })).toBeTruthy();
+  await user.selectOptions(screen.getByLabelText('Meal'), 'lunch');
+  await user.click(screen.getByRole('button', { name: 'Select menu dish Rajma Masala' }));
+  await user.upload(screen.getByLabelText('Before eating photo'), new File(['image'], 'before.png', { type: 'image/png' }));
+  await user.upload(screen.getByLabelText('After eating photo'), new File(['image'], 'after.png', { type: 'image/png' }));
+  fireEvent.submit(screen.getByRole('button', { name: 'Save plate pair' }).closest('form')!);
+  await screen.findByRole('heading', { name: 'Independent reviewer A' });
+  const pair = JSON.parse(localStorage.getItem('messwise.pilot.v1')!)[0];
+  expect(pair.dishes.map((dish: { name: string }) => dish.name)).toEqual(['Plain Rice', 'Rajma Masala']);
+});

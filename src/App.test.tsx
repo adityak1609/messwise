@@ -42,6 +42,7 @@ describe('MessWise workspace workflow', () => {
     fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-10-08' } });
     await user.type(screen.getByLabelText(/Published waste weight/), '12.5');
     await user.selectOptions(screen.getByLabelText('What does it include?'), 'plate');
+    await user.clear(screen.getByLabelText('Lunch'));
     await user.type(screen.getByLabelText('Lunch'), 'Rice, dal, bhindi');
     await user.type(screen.getByLabelText('Action agreed with the mess team'), 'Discuss offering seconds');
     await user.click(screen.getByRole('button', { name: 'Save daily entry' }));
@@ -76,5 +77,37 @@ describe('MessWise workspace workflow', () => {
     }
     const saved = JSON.parse(localStorage.getItem('messwise.v1')!);
     expect(saved).toHaveLength(1); expect(saved[0].wasteKg).toBe(10);
+  });
+
+  it('autofills the dated weekly menu, preserves a substitution, and clears untouched meals outside the week', async () => {
+    localStorage.setItem('messwise.mode.v1', 'local');
+    const user = userEvent.setup(); render(<App />);
+    await screen.findByText('Your first number tells a story');
+    await user.click(screen.getByRole('button', { name: 'Add daily entry' }));
+    fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-10-08' } });
+    expect((screen.getByLabelText('Lunch') as HTMLInputElement).value).toContain('Rajma Masala');
+    expect((screen.getByLabelText('Snacks') as HTMLInputElement).value).toContain('Aloo Pakoda');
+    await user.clear(screen.getByLabelText('Lunch'));
+    await user.type(screen.getByLabelText('Lunch'), 'Actual substituted lunch');
+    fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-10-09' } });
+    expect((screen.getByLabelText('Lunch') as HTMLInputElement).value).toBe('Actual substituted lunch');
+    expect((screen.getByLabelText('Breakfast') as HTMLInputElement).value).toContain('Rajma Stuffed Paratha');
+    await user.click(screen.getByRole('button', { name: 'Use published menu' }));
+    expect((screen.getByLabelText('Lunch') as HTMLInputElement).value).toContain('Punjabi Chole Masala');
+    fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-10-12' } });
+    expect((screen.getByLabelText('Lunch') as HTMLInputElement).value).toBe('');
+    expect(screen.getByText(/No published menu saved for this date/)).toBeTruthy();
+    fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-10-08' } });
+    await user.type(screen.getByLabelText(/Published waste weight/), '3');
+    await user.click(screen.getByRole('button', { name: 'Save daily entry' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    const saved = JSON.parse(localStorage.getItem('messwise.v1')!)[0];
+    expect(saved.menu.snacks).toContain('Aloo Pakoda');
+    await user.click(screen.getByRole('button', { name: /^Daily log/ }));
+    await user.type(screen.getByRole('textbox', { name: 'Search daily entries' }), 'Aloo Pakoda');
+    expect(screen.queryByText('No matching entries')).toBeNull();
+    await user.click(screen.getByRole('button', { name: /Open entry for 8 Oct/ }));
+    fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-10-09' } });
+    expect((screen.getByLabelText('Snacks') as HTMLInputElement).value).toContain('Aloo Pakoda');
   });
 });

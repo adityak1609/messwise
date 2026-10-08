@@ -4,15 +4,18 @@ import { validRecord, type Photo, type WasteRecord, type WasteScope } from '../l
 import { localRepository } from '../lib/localRepository';
 import type { Repository } from '../lib/repository';
 import { scopeLabels, statuses, today } from '../lib/presentation';
+import { dailyMenu, MENU_MEALS, normalizeMenu, publishedMenu, type MenuMeal } from '../lib/menu';
+import { MenuSource } from './MenuSource';
 import { Modal } from './Modal';
 
-const coverages = ['All meals', 'Breakfast', 'Lunch', 'Dinner', 'Not confirmed'];
+const coverages = ['All meals', 'Breakfast', 'Lunch', 'Snacks', 'Dinner', 'Not confirmed'];
 export function EntryEditor({ record, readOnly, repo, onClose, onSave, onDelete, onNew }: { record: WasteRecord | null; readOnly: boolean; repo: Repository; onClose: () => void; onSave: (record: WasteRecord) => Promise<void>; onDelete: (record: WasteRecord) => void; onNew: () => void }) {
   const [date, setDate] = useState(record?.date || today());
   const [weight, setWeight] = useState(record ? String(record.wasteKg) : '');
   const [scope, setScope] = useState<WasteScope>(record?.scope || 'unknown');
   const [coverage, setCoverage] = useState(record?.coverage || 'All meals');
-  const [menu, setMenu] = useState(record?.menu || { breakfast: '', lunch: '', dinner: '' });
+  const [menu, setMenu] = useState(() => record ? normalizeMenu(record.menu) : dailyMenu(today()));
+  const [editedMeals, setEditedMeals] = useState<Set<MenuMeal>>(() => new Set(record ? MENU_MEALS : []));
   const [attendance, setAttendance] = useState(record?.attendance ? String(record.attendance) : '');
   const [notes, setNotes] = useState(record?.notes || '');
   const [photos, setPhotos] = useState<Photo[]>(record?.photos || []);
@@ -23,6 +26,11 @@ export function EntryEditor({ record, readOnly, repo, onClose, onSave, onDelete,
   const [actionNotes, setActionNotes] = useState(record?.action?.notes || '');
   const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  function changeDate(next: string) {
+    const imported = dailyMenu(next);
+    setMenu(current => Object.fromEntries(MENU_MEALS.map(meal => [meal, editedMeals.has(meal) ? current[meal] : imported[meal]])) as typeof menu);
+    setDate(next);
+  }
   function addFiles(files: FileList | null) {
     if (!files) return;
     const added = Array.from(files);
@@ -34,7 +42,7 @@ export function EntryEditor({ record, readOnly, repo, onClose, onSave, onDelete,
   async function submit(event: FormEvent) {
     event.preventDefault(); if (readOnly || busy) return; setError('');
     const now = new Date().toISOString();
-    const value: WasteRecord = { id: record?.id || crypto.randomUUID(), date, wasteKg: Number(weight), scope, coverage: coverage.trim(), menu: { breakfast: menu.breakfast.trim(), lunch: menu.lunch.trim(), dinner: menu.dinner.trim() }, ...(attendance ? { attendance: Number(attendance) } : {}), notes: notes.trim(), photos, ...(action.trim() ? { action: { text: action.trim(), status: actionStatus, notes: actionNotes.trim() } } : {}), createdAt: record?.createdAt || now, updatedAt: now };
+    const value: WasteRecord = { id: record?.id || crypto.randomUUID(), date, wasteKg: Number(weight), scope, coverage: coverage.trim(), menu: { breakfast: menu.breakfast.trim(), lunch: menu.lunch.trim(), dinner: menu.dinner.trim(), ...(menu.snacks.trim() ? { snacks: menu.snacks.trim() } : {}) }, ...(attendance ? { attendance: Number(attendance) } : {}), notes: notes.trim(), photos, ...(action.trim() ? { action: { text: action.trim(), status: actionStatus, notes: actionNotes.trim() } } : {}), createdAt: record?.createdAt || now, updatedAt: now };
     const validation = validRecord(value); if (validation) { setError(validation); return; }
     setBusy(true);
     try {
@@ -49,16 +57,17 @@ export function EntryEditor({ record, readOnly, repo, onClose, onSave, onDelete,
     <fieldset disabled={readOnly || busy}>
       <div className="form-section-title"><span>01</span><h3>The daily number</h3><small>Required</small></div>
       <div className="form-grid">
-        <label>Date<input type="date" required value={date} onChange={e => setDate(e.target.value)} /></label>
+        <label>Date<input type="date" required value={date} onChange={e => changeDate(e.target.value)} /></label>
         <label>Published waste weight <span className="label-hint">kg</span><input type="number" min="0" max="100000" step="0.001" required value={weight} onChange={e => setWeight(e.target.value)} placeholder="e.g. 24.5" /></label>
         <label>What does it include?<select value={scope} onChange={e => setScope(e.target.value as WasteScope)}>{Object.entries(scopeLabels).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
         <label>Meals covered<select value={coverages.includes(coverage) ? coverage : 'custom'} onChange={e => setCoverage(e.target.value === 'custom' ? '' : e.target.value)}>{coverages.map(item => <option key={item}>{item}</option>)}<option value="custom">Other coverage</option></select></label>
       </div>
       {!coverages.includes(coverage) && <label className="full-label">Describe the covered meals<input required maxLength={100} value={coverage} onChange={e => setCoverage(e.target.value)} placeholder="e.g. Breakfast and lunch" /></label>}
       <div className="form-section-title"><span>02</span><h3>What was on the menu?</h3><small>Optional</small></div>
-      <div className="menu-fields">{(['breakfast', 'lunch', 'dinner'] as const).map(meal => <label key={meal}><span className="meal-label">{meal[0].toUpperCase() + meal.slice(1)}</span><input maxLength={1000} placeholder={meal === 'breakfast' ? 'e.g. Poha, tea, banana' : meal === 'lunch' ? 'e.g. Rice, dal, mixed vegetables' : 'e.g. Roti, paneer, rice'} value={menu[meal]} onChange={e => setMenu({ ...menu, [meal]: e.target.value })} /></label>)}</div>
+      {!readOnly && (publishedMenu(date) ? <><MenuSource /><button type="button" className="button secondary small menu-fill" onClick={() => { setMenu(dailyMenu(date)); setEditedMeals(new Set()); }}>Use published menu</button><p className="input-note">Replaces the menu fields below. Your edits stay when you change the date.</p></> : <p className="input-note menu-missing">No published menu saved for this date. Enter the meals you know.</p>)}
+      <div className="menu-fields">{MENU_MEALS.map(meal => <label key={meal}><span className="meal-label">{meal[0].toUpperCase() + meal.slice(1)}</span><input maxLength={1000} placeholder={meal === 'breakfast' ? 'e.g. Poha, tea, banana' : meal === 'lunch' ? 'e.g. Rice, dal, mixed vegetables' : meal === 'snacks' ? 'e.g. Pakoda, tea' : 'e.g. Roti, paneer, rice'} value={menu[meal]} onChange={e => { setMenu({ ...menu, [meal]: e.target.value }); setEditedMeals(items => new Set([...items, meal])); }} /></label>)}</div>
       <div className="form-section-title"><span>03</span><h3>A little context</h3><small>Optional</small></div>
-      <label>Meals served across this record’s covered meals<input type="number" min="1" max="1000000" step="1" placeholder="Leave blank if unavailable" value={attendance} onChange={e => setAttendance(e.target.value)} /><span className="input-note">For a daily total, add breakfast + lunch + dinner attendance. Use actual meals served, not registered students.</span></label>
+      <label>Meals served across this record’s covered meals<input type="number" min="1" max="1000000" step="1" placeholder="Leave blank if unavailable" value={attendance} onChange={e => setAttendance(e.target.value)} /><span className="input-note">Add attendance for exactly the services covered by this weight, including snacks if covered. Use meals served, not registered students.</span></label>
       <label className="full-label">Observation or measurement note<textarea rows={2} maxLength={3000} placeholder="e.g. The board includes all three meals; kitchen waste coverage is unconfirmed." value={notes} onChange={e => setNotes(e.target.value)} /></label>
       <div className="form-section-title"><span>04</span><h3>Photos with a purpose</h3><small>Optional</small></div>
       <div className="upload-controls"><select value={photoKind} aria-label="New photo type" onChange={e => setPhotoKind(e.target.value as Photo['kind'])}><option value="board">Waste-board photo</option><option value="plate">Plate observation</option></select><button type="button" className="button secondary" onClick={() => fileRef.current?.click()}><ImagePlus size={16} />Choose photos</button><input type="file" ref={fileRef} accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => addFiles(e.target.files)} /></div>

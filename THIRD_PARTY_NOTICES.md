@@ -25,11 +25,13 @@ Exact dependency versions are recorded in the root and backend package lock file
 
 The console Lambda package includes licence/notice files for bundled third-party packages under `licenses/`; esbuild also preserves legal comments. Transitive dependencies retain their respective upstream licences.
 
-Each frontend build includes `third-party-notices.txt` with these credits and the complete React, React DOM, Scheduler, and Lucide licence notices.
+Each frontend build includes `third-party-notices.txt` with these credits and the complete React, React DOM, Scheduler, Lucide, and fc-menu licence notices.
 
 ## Data and images
 
 The seven demonstration records are fictional examples created for this app, explicitly labelled in the interface. They contain no fabricated measurement-board photographs. The bowl illustration and favicon are original SVG artwork.
+
+The dated Food Court 2 menu for 5–11 October 2026 was supplied by the user through [Tikmit / Food Court Menus](https://tikmit.com/week/full?id=2026-10-05_to_2026-10-11), created by Aadit Agrawal. Dish names were extracted from that site's public menu bundle; source provenance is retained in `src/data/weekly-menu.json`. This is published menu information, not measured waste. No website implementation code was copied. The upstream [fc-menu repository](https://github.com/aaditagrawal/fc-menu) uses the MIT licence; its full notice is retained in `docs/licenses/fc-menu-MIT.txt` and included in the frontend notices.
 
 Real menu information, measurements, and photo ownership should be credited to their actual source when collected. Obtain permission to use friends' photographs and avoid identifying people in public submission materials.
 

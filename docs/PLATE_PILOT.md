@@ -6,6 +6,8 @@ This is a feasibility pilot for visual scoring, separate from the mess's daily w
 
 In **Plate pilot**, choose **Add plate pair**. Record the date, meal, and 1–8 dishes actually served on that plate. Upload one photo before eating and one after eating: JPEG, PNG, or WebP, up to 3 MiB each. Use the same plate, angle, and lighting; keep each dish visible. Collect pairs without seconds, spills, or transfers when possible. If the original serving cannot be compared, use "cannot assess" during review. Notes record complications; they do not turn an incomparable pair into a measurement.
 
+For 5–11 October 2026, the linked Tikmit Food Court 2 menu supplies dish choices by date and meal. Select only what the volunteer actually received; alternatives such as "Boiled Egg / Banana" appear as separate choices. No dishes are selected automatically. Type replacements in the dish list if service differed. The snapshot covers that exact week and is not reused on later dates.
+
 Use consenting volunteers' photos without identifying faces. Student feedback is optional and describes the student's stated reason. The model receives only the two images and dish identifiers/names. It receives no human ratings, student feedback, free-text collection notes, or previous model output.
 
 Each before/after pair is one plate observation. Two photos are not two plates. Multiple dishes on one plate and repeated volunteers are related observations. The small sample cannot rank dishes for the whole mess or establish a waste-reduction effect.

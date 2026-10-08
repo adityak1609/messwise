@@ -40,6 +40,12 @@ For website-only AWS deployment, run `npm run package:aws`. It creates ready-to-
 
 Attendance is optional. Grams per meal served is `waste kg × 1000 ÷ meal servings`; registered students are a different denominator and must not be entered as meals served. Missing attendance suppresses the per-meal metric. Compare measurements only when their coverage and scope match.
 
+### Linked weekly menu
+
+The user-supplied [Tikmit menu for 5–11 October 2026](https://tikmit.com/week/full?id=2026-10-05_to_2026-10-11), labelled **Food Court 2**, is included as a dated snapshot in `src/data/weekly-menu.json`. New daily entries fill breakfast, lunch, snacks, and dinner for the selected date. Check actual service and edit substitutions. Date changes update untouched fields; edited fields and existing saved menus are preserved. **Use published menu** explicitly replaces the four menu fields. Dates outside this week get no imported dishes, and the snapshot does not refresh automatically.
+
+The plate-pair form offers menu choices for its selected date and meal, with listed alternatives separated. Nothing is preselected: choose only the dishes actually served on that plate, up to eight, or enter substitutions manually. Menus never create waste measurements or plate observations. The source URL, data URL, retrieval time, and bundle generation time are retained with the snapshot. The menu provider is credited in `THIRD_PARTY_NOTICES.md`.
+
 Daily waste cannot be attributed to a particular dish from a daily menu alone. A before/after change is an observation, not evidence that an action caused a reduction. The app does not calculate money, carbon, compost, or biogas savings from unverified factors. Recording amounts and reasons is consistent with [EPA food-waste assessment guidance](https://www.epa.gov/sustainable-management-food/tools-preventing-and-diverting-wasted-food).
 
 ## Optional plate pilot

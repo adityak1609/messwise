@@ -1,0 +1,327 @@
+{
+  "sourceUrl": "https://tikmit.com/week/full?id=2026-10-05_to_2026-10-11",
+  "dataUrl": "https://tikmit.com/data/menu-bundle/normal/2026-10-05-0a212a609323.json",
+  "foodCourt": "Food Court 2",
+  "startDate": "2026-10-05",
+  "endDate": "2026-10-11",
+  "retrievedAt": "2026-10-08T10:02:31.389Z",
+  "bundleGeneratedAt": "2026-10-05T11:05:05.342Z",
+  "days": {
+    "2026-10-05": {
+      "breakfast": [
+        "Aloo Spinach Paratha",
+        "Curd, Imli & Mint Chutney",
+        "Matar Bath",
+        "Coconut Chutney",
+        "Boiled Egg / Watermelon",
+        "Mung Bean Sprouts",
+        "White n Brown Bread",
+        "Focaccia Bread",
+        "Butter & Mix Jam",
+        "Pineapple Jam",
+        "Ginger Tea, Coffee, Hot Boost"
+      ],
+      "lunch": [
+        "Jeera Roti",
+        "Shahi Soya Chunks",
+        "Gobi Methi Mutter",
+        "Dal Kholapuri",
+        "Plain Rice, Boiled Rice",
+        "Dal Palak Khichdi",
+        "Green Gram Sambhar",
+        "Curry Leaves Chutney",
+        "Plain Curd, Garlic Pickle",
+        "Balushahi"
+      ],
+      "snacks": [
+        "Bread Patties (1 PC)",
+        "Green Chutney, Tomato Ketchup",
+        "Plum Slice Cake (1 PC)",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "dinner": [
+        "Coriander Chapathi",
+        "Chicken Vindaloo",
+        "Kashmiri Lal Paneer",
+        "Achari Pulao, Mix Raitha",
+        "Aloo Capsicum Dry",
+        "Plain Rice",
+        "Dal Garlic Tadka",
+        "Pepper Rasam",
+        "Plain Curd, Pickle",
+        "Onion Cubes"
+      ]
+    },
+    "2026-10-06": {
+      "breakfast": [
+        "Foxtail Millet Dosa / Plain Dosa",
+        "Sambhar",
+        "Coconut Chutney",
+        "Hariyali Poha",
+        "Boiled Egg / Papaya",
+        "Cornflakes with Cold Milk",
+        "Boiled Peanuts",
+        "White Bread",
+        "Brown Bread",
+        "Butter & Mix Jam",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "lunch": [
+        "Mint Chapathi",
+        "Veg Chilli Milli",
+        "Aloo Masaledar",
+        "Masoor Dal Tadka",
+        "Plain Rice, Boiled Rice",
+        "Curd Rice",
+        "Harive Sambhar",
+        "Roasted Brinjal Chutney",
+        "Plain Curd, Pickle",
+        "Jaljeera"
+      ],
+      "snacks": [
+        "Veg Chowmein",
+        "Tomato Sauce",
+        "Cold Coffee",
+        "Karak Tea, Hot Milk"
+      ],
+      "dinner": [
+        "Ajwain Roti",
+        "Kerala Egg Roast (2 PC)",
+        "Babycorn Rawa Fry (2 PC)",
+        "Shahi Veg Curry",
+        "Bread Pulav, Raitha",
+        "Tomato Dal",
+        "Plain Rice",
+        "Lemon Rasam",
+        "Plain Curd, Pickle",
+        "Veg Hawaian Salad"
+      ]
+    },
+    "2026-10-07": {
+      "breakfast": [
+        "Carrot Topped Idli",
+        "Sambhar",
+        "Coconut Chutney",
+        "Namkeen Seviyan",
+        "Egg Omelette / Sweet Lemon",
+        "Sprouted Red Channa",
+        "White Bread",
+        "Brown Bread",
+        "Peanut Butter",
+        "Butter & Mix Jam",
+        "Tea, Coffee,Hot Horlicks"
+      ],
+      "lunch": [
+        "Methi Roti",
+        "Gujarati Kadhi",
+        "Bhindi Aamchuri",
+        "Dal Makhani",
+        "Plain Rice",
+        "Brown Rice",
+        "Kokum Rasam",
+        "Beetroot Subzi",
+        "Plain Curd, Pickle",
+        "Fruit Punch"
+      ],
+      "snacks": [
+        "Masala Bun (1 PC)",
+        "Tomato Ketchup",
+        "Cinnamon Pound Cake (1 PC)",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "dinner": [
+        "Chapathi",
+        "Mackerel Fish Fry / Chicken Kabab",
+        "Hara Bhara Kabab (2 PC)",
+        "Green Peas Masala",
+        "Ghee Rice",
+        "Steam Rice",
+        "Dal Tove",
+        "Udupi Rasam",
+        "Plain Curd, Pickle",
+        "Ice Cream"
+      ]
+    },
+    "2026-10-08": {
+      "breakfast": [
+        "Poori",
+        "Aloo Pathal Bhaji",
+        "Coconut Chutney",
+        "Pineapple Sheera",
+        "Boiled Egg / Banana",
+        "Cornflakes with Cold Milk",
+        "White Bread",
+        "Brown Bread",
+        "Boiled Chickpea",
+        "Butter & Mix Jam",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "lunch": [
+        "Chapathi",
+        "Rajma Masala",
+        "Aloo Tadka Dry",
+        "Dal Coriander",
+        "Methi Khichdi",
+        "Plain Rice, Boiled Rice",
+        "Arachuvitta Sambhar",
+        "Peanut Thecha",
+        "Plain Curd, Pickle",
+        "Fryums"
+      ],
+      "snacks": [
+        "Aloo Pakoda",
+        "Coconut Chutney",
+        "Honey Dates Muffins (1 PC)",
+        "Tea, Coffee, Hot Chocolate"
+      ],
+      "dinner": [
+        "Curry Leaves Roti",
+        "Creamy Corainder Egg",
+        "Dhingri Matar",
+        "Kushka Rice",
+        "Carrot Raitha",
+        "Red Channa Dry",
+        "Plain Rice, Dal Triveti",
+        "Southe Sambhar",
+        "Plain Curd, Pickle",
+        "Motichur Laddu"
+      ]
+    },
+    "2026-10-09": {
+      "breakfast": [
+        "Rajma Stuffed Paratha",
+        "Imli & Mint Chutney",
+        "Plain Curd, Pickle",
+        "Vangi Bath",
+        "Boiled Egg / Watermelon",
+        "White Bread",
+        "Brown Bread",
+        "Sweet Potato",
+        "Pineapple Jam",
+        "Butter & Mix Jam",
+        "Tea, Coffee, Hot Bournvita"
+      ],
+      "lunch": [
+        "Poori / Phulka",
+        "Punjabi Chole Masala",
+        "Aloo Matar Subzi",
+        "Dal Jeera Fry",
+        "Plain Rice",
+        "Gulla Sambhar",
+        "Pineapple Menaskai",
+        "Plain Curd",
+        "Pickle",
+        "Rawa Kheer"
+      ],
+      "snacks": [
+        "Spinach Balls (2 PC)",
+        "Tomato Sauce",
+        "Mango Slice Cake (1 PC)",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "dinner": [
+        "Carrot Chapathi",
+        "Delhi Butter Chicken",
+        "Paneer Hyderabadi Green Masala",
+        "Lobia Dry Subzi",
+        "Bangara Rice",
+        "Andhra Pappu Charu",
+        "Plain Rice",
+        "Amla Rasam",
+        "Plain Curd, Pickle",
+        "Tossed Salad"
+      ]
+    },
+    "2026-10-10": {
+      "breakfast": [
+        "Vegetable Idli / Plain Idli",
+        "Medu Vada",
+        "Sambhar",
+        "Coconut Chutney",
+        "Egg Omelette / Pineapple",
+        "Cornflakes with Cold Milk",
+        "White Bread",
+        "Brown Bread",
+        "Boiled Black Eyed Peas",
+        "Butter & Mix Jam",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "lunch": [
+        "Masala Roti",
+        "Bengali Dimer Dalna (Egg Curry)",
+        "Tofu Kadai",
+        "Chatpata Aloo Bhindi",
+        "Plain Rice, Brown Rice",
+        "Dal Mughlai",
+        "Kerala Style Sambhar",
+        "South Subzi",
+        "Plain Curd, Pickle",
+        "Buttermilk"
+      ],
+      "snacks": [
+        "Sev Topped Dahi Vada (2 PC)",
+        "Sweet & Mint Chutney",
+        "Assorted Cookies (1 PC)",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "dinner": [
+        "Plain Paratha",
+        "White Vatana Curry",
+        "Soya Bhurji",
+        "Dal Sultani",
+        "Plain Rice",
+        "Raw Mango Rasam",
+        "Plain Curd",
+        "Pickle",
+        "Pineapple Tea"
+      ]
+    },
+    "2026-10-11": {
+      "breakfast": [
+        "SPECIAL BREAKFAST",
+        "Benne Dosa / Sada Dosa",
+        "Malabar Egg Curry",
+        "Veg Kurma",
+        "Coconut Chutney",
+        "Coffee Slice Cake",
+        "Pineapple Cucumber Cooler",
+        "Apple (Fruit)",
+        "Chocoflakes With Cold Milk",
+        "White & Brown Bread",
+        "Peanut Butter",
+        "Butter & Mix Jam",
+        "Tea, Coffee, Hot Milk"
+      ],
+      "lunch": [
+        "Ghee Mint Roti",
+        "Maharashtrian Chicken Curry",
+        "Paneer Kolhapuri",
+        "Peas Pulav, Raitha",
+        "Beans & Cabbage Subzi",
+        "Dal kadai",
+        "Plain Rice",
+        "Vendakkai Sambhar",
+        "Plain Curd, Pickle",
+        "Jalebi With Rabdi"
+      ],
+      "snacks": [
+        "Bhel Puri",
+        "Sweet Chutney",
+        "Mint Chutnsy",
+        "Tea, Coffee, Hot n Cold Milk"
+      ],
+      "dinner": [
+        "Beetroot Chapathi",
+        "Egg Lababdar",
+        "Veg Makhanwala",
+        "Sprouts Subzi",
+        "Tomato Rice, Slices Onion Raitha",
+        "Plain Rice",
+        "Dal Methi",
+        "Tomato Rasam",
+        "Plain Curd, Pickle",
+        "Salad"
+      ]
+    }
+  }
+}
