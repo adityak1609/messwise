@@ -10,7 +10,7 @@ Replace every bracketed field with a verified fact before submitting. Keep the w
 
 **YouTube demo, under three minutes:** [URL]
 
-**Hosted application:** [URL, or omit until deployed]
+**Hosted application:** [MessWise on AWS Amplify](https://pilot.d3b3z2kcn310jh.amplifyapp.com)
 
 ## Problem
 
@@ -26,15 +26,15 @@ An optional plate pilot stores paired photos and a dish list. Two people save in
 
 ## Where AWS fits
 
-[Complete after deployment and a successful end-to-end check.]
+Hosting, first-login/password setup, record save/reload, private photo upload/retrieval, user isolation, and paired-photo human reviews were verified with disposable technical data on 8 October 2026. Those test records were removed and are not field evidence. Bedrock still reports pending AWS account verification; do not claim a successful inference until it is verified and shown in the demo.
 
-The frontend is hosted on [actual hosting service]. Cognito authenticates the pilot login. API Gateway sends record requests to a Node.js Lambda function, which stores records in DynamoDB. Source and plate photos are held in a private S3 bucket using signed upload/download access. The video shows [timestamp] saving and reloading a record, that record in DynamoDB, and a Lambda invocation in CloudWatch.
+The frontend is hosted on AWS Amplify. Cognito authenticates the pilot login. API Gateway sends record requests to a Node.js Lambda function, which stores records in DynamoDB. Source and plate photos are held in a private S3 bucket using signed upload/download access. The video shows [timestamp] saving and reloading a record, that record in DynamoDB, and a Lambda invocation in CloudWatch.
 
 [Include only if demonstrated:] The paired-photo endpoint calls Amazon Bedrock's Nova Lite model in [model region], withholding human ratings and feedback. The video shows [timestamp] a real inference result and its CloudWatch request metadata. Pilot model/prompt version: [actual values from the exported evaluation].
 
-**Deployment region:** [region]
+**Deployment region:** `us-east-1`
 
-**Verified on:** [date]
+**Verified on:** 8 October 2026 (technical deployment checks; real pilot results still pending)
 
 **AWS evidence in video:** [timestamp]
 

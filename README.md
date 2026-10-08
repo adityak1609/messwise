@@ -4,6 +4,10 @@ A small food-waste log for a campus mess: turn the daily published waste figure,
 
 The three-day scope is one mess. Daily kilograms are the main measure; photos add context and are never used to estimate grams. Sample records are illustrative, not field results.
 
+**Live application:** [Open MessWise](https://pilot.d3b3z2kcn310jh.amplifyapp.com). The app opens with labelled sample data; the private AWS workspace requires an administrator-created Cognito login.
+
+Deployment verified on **8 October 2026**: Amplify hosting, Cognito first-login/password flow, Lambda/API CORS, DynamoDB save/reload and user isolation, private S3 upload/retrieval, and locked paired-photo human reviews. Disposable technical test data was removed. Real mess observations and vision-model accuracy remain to be evaluated. Bedrock currently reports that AWS account verification is pending; no successful inference is claimed.
+
 ## Run locally
 
 Use Node.js 22 or later and npm. From the project directory:
@@ -56,7 +60,7 @@ Start with five pairs. See the [pilot protocol and evaluation guide](docs/PLATE_
 
 ## AWS path
 
-The repository includes a deployment template; deployment to an account is a separate step. Local mode does not demonstrate AWS use.
+The live application uses Amplify Hosting and the backend shown below in `us-east-1`. The repository also includes the template and instructions for deploying your own private workspace. Local mode does not demonstrate AWS use.
 
 ```mermaid
 flowchart LR

@@ -12,6 +12,8 @@ const event = (route, pair, payload = pair) => ({ routeKey: route, pathParameter
 const rated = (pair, name, scores) => ({ name, scoredAt: new Date().toISOString(), ratings: pair.dishes.map((d, i) => ({ dishId: d.id, remainingPercent: scores[i] })) });
 function fixture(options = {}) {
   const items = new Map(); const calls = [];
+  // DynamoDB maps preserve values, but not JavaScript object property order.
+  const reorderMaps = value => Array.isArray(value) ? value.map(reorderMaps) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).reverse().map(([key, item]) => [key, reorderMaps(item)])) : value;
   const db = { async send(command) {
     const input = command.input, kind = command.constructor.name; calls.push(command);
     if (kind === 'GetCommand') return { Item: structuredClone(items.get(input.Key.sk)) };
@@ -20,7 +22,7 @@ function fixture(options = {}) {
       const key = input.Item?.sk ?? input.Key.sk, current = items.get(key);
       const allowed = input.ConditionExpression === 'attribute_not_exists(pk)' ? !current : current?.version === input.ExpressionAttributeValues[':v'];
       if (!allowed) throw Object.assign(new Error('Conflict'), { name: 'ConditionalCheckFailedException' });
-      if (input.Item) items.set(key, structuredClone(input.Item)); else items.delete(key);
+      if (input.Item) items.set(key, options.reorderMaps ? reorderMaps(input.Item) : structuredClone(input.Item)); else items.delete(key);
       return {};
     }
     throw new Error('Unexpected DB command ' + kind);
@@ -53,6 +55,21 @@ test('model scoring waits for two independent human reviewers and locks existing
   assert.equal((await f.call('PUT /plate-pairs/{id}', { ...pair, reviews: { a: rated(pair, 'Me', [100, 100]) } })).statusCode, 400);
   assert.equal((await f.call('PUT /plate-pairs/{id}', { ...pair, reviews: { ...pair.reviews, b: rated(pair, 'me', [25, 50]) } })).statusCode, 400);
   assert.equal(f.bedrockCalls.length, 0);
+});
+test('DynamoDB map ordering allows reviews while preserving immutable inputs and saved ratings', async () => {
+  const f = fixture({ reorderMaps: true });
+  let pair = await f.reviewBoth(fresh());
+  assert.ok(pair.reviews.a && pair.reviews.b);
+  const alteredReview = structuredClone(pair); alteredReview.reviews.a.ratings[0].remainingPercent = 100;
+  assert.equal((await f.call('PUT /plate-pairs/{id}', alteredReview)).statusCode, 400);
+  const alteredPhoto = structuredClone(pair); alteredPhoto.before.key = photo().key;
+  assert.equal((await f.call('PUT /plate-pairs/{id}', alteredPhoto)).statusCode, 400);
+  assert.equal((await f.call('PUT /plate-pairs/{id}', { ...pair, dishes: [...pair.dishes].reverse() })).statusCode, 400);
+  const result = await f.call('POST /plate-pairs/{id}/score', pair);
+  assert.equal(result.statusCode, 200, result.body);
+  pair = await f.save(JSON.parse(result.body).pair);
+  assert.equal(pair.runs.length, 1);
+  assert.equal(f.bedrockCalls.length, 1);
 });
 test('a pair supports two independently invoked runs with provenance and a visible abstention', async () => {
   const f = fixture(); let pair = await f.reviewBoth(fresh());
