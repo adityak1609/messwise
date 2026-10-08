@@ -8,6 +8,8 @@ AWS CLI v2.32.0 and newer support [browser login using your existing AWS console
 
 The helper creates a separate `messwise` profile, keeps its temporary login/configuration under the Git-ignored `.tools/aws-session` directory, and verifies the selected identity. It does not request long-term access keys or overwrite the computer's default AWS profile. Authentication requires your browser interaction. After successful sign-in, the assistant can use that profile to deploy the prepared packages, configure the frontend, and set up hosting. A successful login alone does not deploy anything.
 
+After sign-in, `node scripts/deploy-aws.mjs` deploys the prepared console template through the CLI, configures `.env.local`, rebuilds the frontend, uploads it to Amplify, and sets API/photo CORS to the hosted origin. It uses only the event's `messwise` profile. Deployment state and public app identifiers are saved in the ignored `.artifacts/aws/deployment-state.json`; temporary upload URLs stay in memory. The script refuses a saved deployment from another account/region and refuses to modify existing buckets, stacks, or hosting apps without this project's tag. It never deletes cloud resources automatically. After hosting, create a pilot user and verify authenticated save/read/photos and real Bedrock scoring; a successful HTTP page check does not establish those flows.
+
 ## Website-only deployment
 
 ### 1. Upload the API package to S3
