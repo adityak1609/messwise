@@ -26,7 +26,12 @@ if (existingBucket) {
   const tags = await aws(['s3api', 'get-bucket-tagging', '--bucket', state.codeBucket, '--expected-bucket-owner', identity.Account]);
   if (!tags.TagSet.some(tag => tag.Key === 'Project' && tag.Value === 'MessWise')) throw new Error('Existing code bucket is not marked as this project. Refusing to modify it.');
 } else {
-  await aws(['s3api', 'create-bucket', '--bucket', state.codeBucket, ...(region === 'us-east-1' ? [] : ['--create-bucket-configuration', `LocationConstraint=${region}`])]);
+  try {
+    await aws(['s3api', 'create-bucket', '--bucket', state.codeBucket, ...(region === 'us-east-1' ? [] : ['--create-bucket-configuration', `LocationConstraint=${region}`])]);
+  } catch (error) {
+    if (/NotSignedUp/.test(error.message)) throw new Error('AWS sign-in succeeded, but S3 is not enabled for this account yet. No code bucket was created. Complete any requested account setup in the AWS console and wait for activation, then rerun this deployment. Keep the Free plan; this error alone does not require a plan upgrade.');
+    throw error;
+  }
   await aws(['s3api', 'put-bucket-tagging', '--bucket', state.codeBucket, '--tagging', 'TagSet=[{Key=Project,Value=MessWise}]']);
 }
 await aws(['s3api', 'put-public-access-block', '--bucket', state.codeBucket, '--expected-bucket-owner', identity.Account, '--public-access-block-configuration', 'BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true']);
