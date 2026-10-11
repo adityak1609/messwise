@@ -35,11 +35,19 @@ export default function App() {
     promise.then(data => { if (current) setRecords([...data].sort((a, b) => b.date.localeCompare(a.date))); })
       .catch(e => { if (current) setError(e instanceof Error ? e.message : 'Could not load your records.'); })
       .finally(() => { if (current) setLoading(false); });
-    try { localStorage.setItem('messwise.mode.v1', mode); } catch { /* Records repository reports storage errors. */ }
     return () => { current = false; };
   }, [mode, repo, refresh]);
+  useEffect(() => {
+    try { localStorage.setItem('messwise.mode.v1', mode); } catch { /* Records repository reports storage errors. */ }
+  }, [mode]);
   useEffect(() => { if (!toast) return; const timer = setTimeout(() => setToast(''), 7000); return () => clearTimeout(timer); }, [toast]);
-  useEffect(() => { const callback = () => setRefresh(x => x + 1); window.addEventListener('storage', callback); return () => window.removeEventListener('storage', callback); }, []);
+  useEffect(() => {
+    const callback = (event: StorageEvent) => {
+      if (mode === 'local' && (event.key === 'messwise.v1' || event.key === null)) setRefresh(x => x + 1);
+    };
+    window.addEventListener('storage', callback);
+    return () => window.removeEventListener('storage', callback);
+  }, [mode]);
 
   function navigate(next: View) { setView(next); setMobileNav(false); setSourceMenu(false); }
   function newEntry() { if (mode === 'demo') setMode('local'); setEditor('new'); }
