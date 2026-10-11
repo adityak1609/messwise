@@ -34,7 +34,7 @@ The frontend is hosted on AWS Amplify. Cognito authenticates the pilot login. AP
 
 **Deployment region:** `us-east-1`
 
-**Verified on:** 11 October 2026 (technical deployment checks and seven user-supplied daily weights saved/reloaded; Bedrock scoring, plate evaluation, and follow-up outcomes still pending)
+**Verified on:** 11 October 2026 (technical deployment checks, seven user-supplied daily weights saved/reloaded, and two real post-meal photos attached with private retrieval verified; Bedrock scoring, plate evaluation, and follow-up outcomes still pending)
 
 **AWS evidence in video:** [timestamp]
 
@@ -46,9 +46,9 @@ Do not claim AWS deployment from local storage mode or from the presence of infr
 - Dates and count of daily records: 5–11 October 2026, n = 7. Total reported waste: 603 kg; mean: 86.1 kg per recorded day. All seven records were saved and reloaded from the private AWS workspace.
 - Weight scope and covered meals: unconfirmed; recorded explicitly in each entry.
 - Student counts refer to distinct students during each day, not meal servings. They are retained in notes and excluded from grams-per-meal calculations.
-- Supporting plate photos: [n], provided with permission; these are a convenience sample.
-- Paired-photo evaluation: [n plates], [m dish observations], [collection dates]; repeated volunteers and dishes on one plate are related observations.
-- Model vs each human, exact/within-25-point agreement: [counts/denominators]; cannot-assess cases: [counts]. Human-to-human agreement and model repeatability: [counts/denominators].
+- Supporting plate observations: n = 2 after-eating photos from two different students' Thursday lunch plates, dated 8 October within the participant's supplied week. Both are attached to the private daily record and verified through S3 retrieval. The participant confirmed their post-meal status and that they depict different students' plates. These are a convenience sample. [Confirm the photo providers' permission before public demo use.]
+- Paired-photo evaluation: not yet collected. The two after-only photographs are not before/after pairs; no original serving photos or weighed leftovers were supplied. Their presence does not assign any share of the separately reported 87 kg daily total to lunch or these plates.
+- Human ratings, model agreement and repeatability: not yet evaluated; there are no real paired-photo human reviews or model runs. [Replace with actual counts and denominators only after collecting and evaluating valid pairs.]
 - Staff feedback or proposed action: [actual feedback/action, or “not yet collected”].
 - Follow-up observation: [actual result with comparable scope, or “not yet collected”].
 

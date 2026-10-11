@@ -1,15 +1,17 @@
 # MessWise demo: target 2 minutes 45 seconds
 
-Use a deployed AWS workspace and real, permitted mess data. Prepare a pair with both human reviews already saved, and another pair with both model runs completed. Keep the sample labels and real n visible. Rehearse actual inference latency so the final video stays under three minutes.
+Use a deployed AWS workspace and real, permitted mess data. Keep sample labels and real n visible. The alternative script below fits the currently available after-only photo evidence. Use the paired-photo scoring script only after collecting valid pairs, saving real human reviews, and verifying successful model inference; rehearse its actual latency before recording.
 
 **Current access status, 11 October 2026:** AWS hosting, authenticated storage, photo retrieval, and human reviews passed the live checks. Bedrock inference is blocked with `ValidationException: Operation not allowed`. Use the scoring script below only after a successful real inference. If access remains blocked, use this 2:45 alternative:
 
+**Current field-photo evidence:** two real post-meal lunch photos from two different students are attached to the 8 October daily record in the private AWS workspace. They are after-only observations, not a paired-photo evaluation. Show them in **Photo journal** and confirm provider permission before public use. The 87 kg is a separate daily waste measurement with unconfirmed meal coverage; do not call it the Thursday lunch total.
+
 | Time | Show | Suggested narration |
 | --- | --- | --- |
-| 0:00–0:15 | Mess waste notice and dashboard | The mess already measures waste. MessWise keeps that evidence beside the menu and a follow-up action. |
-| 0:15–0:50 | Save a real entry in AWS mode and refresh | This is the published weight, its scope, meal coverage, and source photo. Attendance is optional. |
-| 0:50–1:20 | Weekly menu and a real paired-photo observation | The dated menu helps record what was served. Photos add context without inventing waste kilograms. |
-| 1:20–1:45 | Two saved independent human reviews | We score the visual fraction remaining in quarter steps and mark unclear dishes as cannot assess. AI scoring is implemented, but AWS account access is still blocked; no model result is claimed. |
+| 0:00–0:15 | Dashboard and source notes | The mess participant confirmed seven measured daily waste figures. MessWise keeps them beside the menu, supporting observations and a follow-up action. |
+| 0:15–0:50 | Save a real entry in AWS mode and refresh | We record the reported weight, menu and what its coverage is known to include. Unconfirmed scope stays visible; attendance is optional. |
+| 0:50–1:20 | Weekly menu and the two real post-meal photos in Photo journal | These are two different students' Thursday lunch plates after eating. Photos document visible leftovers; daily kilograms come from the reported measurement. |
+| 1:20–1:45 | Thursday record and its observation notes | Original serving photos were not supplied, so these observations have no percentage-left scores or plate weights. The 87 kg is the separately reported daily total, with meal coverage still unconfirmed. |
 | 1:45–2:20 | DynamoDB entry, private S3 object, and Lambda invocation in CloudWatch | The app authenticates with Cognito and stores records and photos on AWS. These are the real saved record and request log. |
 | 2:20–2:45 | Action, follow-up status, and public repository | Record an action to try and compare later measurements. Any reduction claim still needs field evidence. |
 
