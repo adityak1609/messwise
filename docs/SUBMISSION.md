@@ -34,7 +34,7 @@ The frontend is hosted on AWS Amplify. Cognito authenticates the pilot login. AP
 
 **Deployment region:** `us-east-1`
 
-**Verified on:** 11 October 2026 (technical deployment checks; Bedrock scoring and real pilot results still pending)
+**Verified on:** 11 October 2026 (technical deployment checks and seven user-supplied daily weights saved/reloaded; Bedrock scoring, plate evaluation, and follow-up outcomes still pending)
 
 **AWS evidence in video:** [timestamp]
 
@@ -42,10 +42,10 @@ Do not claim AWS deployment from local storage mode or from the presence of infr
 
 ## Pilot evidence and limits
 
-- Source of published measurements: [mess notice/register; permission if applicable].
-- Dates and count of real daily records: [dates; n].
-- Weight scope and covered meals: [confirmed scope, or scope unconfirmed].
-- Attendance source and denominator, if used: [source; meals served for the same coverage].
+- Source of daily weights: a weekly table supplied by the mess participant, who confirmed that all seven weights are measured. The original mess notice/register has not been attached to these records.
+- Dates and count of daily records: 5–11 October 2026, n = 7. Total reported waste: 603 kg; mean: 86.1 kg per recorded day. All seven records were saved and reloaded from the private AWS workspace.
+- Weight scope and covered meals: unconfirmed; recorded explicitly in each entry.
+- Student counts refer to distinct students during each day, not meal servings. They are retained in notes and excluded from grams-per-meal calculations.
 - Supporting plate photos: [n], provided with permission; these are a convenience sample.
 - Paired-photo evaluation: [n plates], [m dish observations], [collection dates]; repeated volunteers and dishes on one plate are related observations.
 - Model vs each human, exact/within-25-point agreement: [counts/denominators]; cannot-assess cases: [counts]. Human-to-human agreement and model repeatability: [counts/denominators].
@@ -53,6 +53,8 @@ Do not claim AWS deployment from local storage mode or from the presence of infr
 - Follow-up observation: [actual result with comparable scope, or “not yet collected”].
 
 Photos supply context; the app does not estimate food mass from images. Daily totals cannot identify a particular dish as the cause. Sample data is labelled and excluded from claims about field results. A short pilot does not establish sustained waste reduction or causality. No forecast, emissions savings, or monetary savings are claimed.
+
+The supplied table also lists percentages relative to cooked food, but no cooked-weight denominator was provided. These percentages remain source context in record notes and are not verified app metrics. Menu-based explanations of why a dish increases or reduces waste are not presented as observed causes. The dated menu is from [TikMenu's Food Court 2 week of 5–11 October](https://tikmit.com/week/full?id=2026-10-05_to_2026-10-11).
 
 ## Tools and credits
 

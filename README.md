@@ -6,7 +6,9 @@ The three-day scope is one mess. Daily kilograms are the main measure; photos ad
 
 **Live application:** [Open MessWise](https://pilot.d3b3z2kcn310jh.amplifyapp.com). The app opens with labelled sample data; the private AWS workspace requires an administrator-created Cognito login.
 
-Deployment rechecked on **11 October 2026**: Amplify hosting, Cognito first-login/password flow, Lambda/API CORS, DynamoDB save/reload and user isolation, private S3 upload/retrieval, and locked paired-photo human reviews. All 13 live API checks passed; disposable technical test data was removed. Real mess observations and vision-model accuracy remain to be evaluated. Bedrock reports `NOT_AUTHORIZED`, and a minimal direct Converse request returns `ValidationException: Operation not allowed`; no successful inference is claimed. The daily tracker and human-review workflow remain usable while model access is resolved.
+Deployment rechecked on **11 October 2026**: Amplify hosting, Cognito first-login/password flow, Lambda/API CORS, DynamoDB save/reload and user isolation, private S3 upload/retrieval, and locked paired-photo human reviews. All 13 live API checks passed; disposable technical test data was removed. Plate observations, vision-model accuracy and follow-up outcomes remain to be evaluated. Bedrock reports `NOT_AUTHORIZED`, and a minimal direct Converse request returns `ValidationException: Operation not allowed`; no successful inference is claimed. The daily tracker and human-review workflow remain usable while model access is resolved.
+
+The private pilot workspace now contains seven daily weights supplied by the mess participant for **5–11 October 2026**, totalling **603 kg** (86.1 kg/day), with the matching dated menus. The participant confirmed all seven weights as measured. Waste scope and covered meals remain unconfirmed; distinct-student counts are kept as notes rather than meal-serving denominators. Original source-notice photos, plate evaluation and follow-up outcomes remain to be collected.
 
 ## Run locally
 
