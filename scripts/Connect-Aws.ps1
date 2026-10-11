@@ -24,6 +24,10 @@ $env:AWS_LOGIN_CACHE_DIRECTORY = Join-Path $sessionPath 'login-cache'
 $env:AWS_PROFILE = 'messwise'
 $env:AWS_PAGER = ''
 $env:AWS_CLI_AUTO_PROMPT = 'off'
+foreach ($credentialVariable in @('AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 'AWS_SESSION_TOKEN', 'AWS_ENDPOINT_URL')) {
+    Remove-Item -LiteralPath ('Env:\' + $credentialVariable) -ErrorAction SilentlyContinue
+}
+$Host.UI.RawUI.WindowTitle = 'MessWise AWS sign-in - use this window'
 
 Write-Host 'Complete the AWS sign-in in your browser. Choose the account where you want MessWise deployed.'
 $loginArguments = @('login', '--profile', 'messwise', '--region', $Region, '--no-cli-pager')
@@ -32,7 +36,12 @@ if ($Remote) {
     Write-Host 'Open the AWS link printed below, then paste the authorization code into THIS terminal window.'
     Write-Host 'The code goes directly to the AWS CLI. Keep it out of chat.'
 }
-& $awsCliPath @loginArguments
+$nodeCommand = Get-Command node -ErrorAction SilentlyContinue
+if ($Remote -and $nodeCommand) {
+    & $nodeCommand.Source (Join-Path $PSScriptRoot 'aws-login-remote.mjs') $awsCliPath $Region
+} else {
+    & $awsCliPath @loginArguments
+}
 if ($LASTEXITCODE -ne 0) { throw 'AWS login did not complete. No resources have been deployed.' }
 & $awsCliPath configure set region $Region --profile messwise
 if ($LASTEXITCODE -ne 0) { throw 'Could not save the selected deployment region.' }

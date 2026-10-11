@@ -2,6 +2,19 @@
 
 Use a deployed AWS workspace and real, permitted mess data. Prepare a pair with both human reviews already saved, and another pair with both model runs completed. Keep the sample labels and real n visible. Rehearse actual inference latency so the final video stays under three minutes.
 
+**Current access status, 11 October 2026:** AWS hosting, authenticated storage, photo retrieval, and human reviews passed the live checks. Bedrock inference is blocked with `ValidationException: Operation not allowed`. Use the scoring script below only after a successful real inference. If access remains blocked, use this 2:45 alternative:
+
+| Time | Show | Suggested narration |
+| --- | --- | --- |
+| 0:00–0:15 | Mess waste notice and dashboard | The mess already measures waste. MessWise keeps that evidence beside the menu and a follow-up action. |
+| 0:15–0:50 | Save a real entry in AWS mode and refresh | This is the published weight, its scope, meal coverage, and source photo. Attendance is optional. |
+| 0:50–1:20 | Weekly menu and a real paired-photo observation | The dated menu helps record what was served. Photos add context without inventing waste kilograms. |
+| 1:20–1:45 | Two saved independent human reviews | We score the visual fraction remaining in quarter steps and mark unclear dishes as cannot assess. AI scoring is implemented, but AWS account access is still blocked; no model result is claimed. |
+| 1:45–2:20 | DynamoDB entry, private S3 object, and Lambda invocation in CloudWatch | The app authenticates with Cognito and stores records and photos on AWS. These are the real saved record and request log. |
+| 2:20–2:45 | Action, follow-up status, and public repository | Record an action to try and compare later measurements. Any reduction claim still needs field evidence. |
+
+Use only collected observations and genuine feedback in either script. If a feature has no real pilot evidence, demonstrate its workflow without claiming an outcome.
+
 | Time | Show | Suggested narration |
 | --- | --- | --- |
 | 0:00–0:15 | Published waste notice and dashboard | Our mess already publishes daily waste kilograms. MessWise connects that number to its menu, evidence, and a follow-up action. |

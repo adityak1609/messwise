@@ -26,7 +26,7 @@ An optional plate pilot stores paired photos and a dish list. Two people save in
 
 ## Where AWS fits
 
-Hosting, first-login/password setup, record save/reload, private photo upload/retrieval, user isolation, and paired-photo human reviews were verified with disposable technical data on 8 October 2026. Those test records were removed and are not field evidence. Bedrock still reports pending AWS account verification; do not claim a successful inference until it is verified and shown in the demo.
+Hosting, first-login/password setup, record save/reload, private photo upload/retrieval, user isolation, and paired-photo human reviews were rechecked with disposable technical data on 11 October 2026; all 13 live API checks passed. Those test records were removed and are not field evidence. Bedrock reports `NOT_AUTHORIZED`, and a minimal direct Converse request returns `ValidationException: Operation not allowed`; do not claim a successful inference until it is verified and shown in the demo. If access remains blocked at submission time, describe model scoring as implemented but unavailable on this account, and demonstrate the working tracker and human-review workflow.
 
 The frontend is hosted on AWS Amplify. Cognito authenticates the pilot login. API Gateway sends record requests to a Node.js Lambda function, which stores records in DynamoDB. Source and plate photos are held in a private S3 bucket using signed upload/download access. The video shows [timestamp] saving and reloading a record, that record in DynamoDB, and a Lambda invocation in CloudWatch.
 
@@ -34,7 +34,7 @@ The frontend is hosted on AWS Amplify. Cognito authenticates the pilot login. AP
 
 **Deployment region:** `us-east-1`
 
-**Verified on:** 8 October 2026 (technical deployment checks; real pilot results still pending)
+**Verified on:** 11 October 2026 (technical deployment checks; Bedrock scoring and real pilot results still pending)
 
 **AWS evidence in video:** [timestamp]
 
