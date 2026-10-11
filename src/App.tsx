@@ -48,6 +48,10 @@ export default function App() {
     if (next === 'aws' && (!cloudConfigured || !isSignedIn())) { navigate('settings'); return; }
     setMode(next);
   }
+  function selectSettingsWorkspace(next: Mode) {
+    switchMode(next);
+    if (next === 'aws' && cloudConfigured && isSignedIn()) navigate('overview');
+  }
   async function save(record: WasteRecord) {
     await repo.save(record); setEditor(null); setRefresh(x => x + 1); setToast('Daily entry saved. One more step towards less waste.');
   }
@@ -90,7 +94,7 @@ export default function App() {
           {view === 'log' && <DailyLog records={records} onNew={newEntry} onEdit={setEditor} />}
           {view === 'photos' && <PhotoJournal records={records} repo={repo} onNew={newEntry} />}
           {view === 'actions' && <Actions records={records} demo={mode === 'demo'} onNew={newEntry} onEdit={setEditor} onStatus={updateAction} />}
-          {view === 'settings' && <Settings mode={mode} records={records} onMode={setMode} notify={setToast} />}
+          {view === 'settings' && <Settings mode={mode} records={records} onMode={selectSettingsWorkspace} notify={setToast} />}
         </>}
         <footer className="page-footer"><span><Leaf size={13} /> Built for better meals, one day at a time.</span><span>MessWise <span className="footer-dot">·</span> A food waste pilot</span></footer>
       </main>
