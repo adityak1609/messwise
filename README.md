@@ -1,5 +1,7 @@
 # MessWise
 
+**Hackathon team:** crypto_knights (solo entrant). See the [submission writeup](docs/SUBMISSION.md) and [2:40 demo guide](docs/THREE_MINUTE_DEMO.md).
+
 A small food-waste log for a campus mess: turn the daily published waste figure, menu, and supporting photos into a record that staff can review and act on.
 
 The three-day scope is one mess. Daily kilograms are the main measure; photos add context and are never used to estimate grams. Sample records are illustrative, not field results.

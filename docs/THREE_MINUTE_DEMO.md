@@ -1,32 +1,28 @@
-# MessWise demo: target 2 minutes 45 seconds
+# MessWise demo - target 2 minutes 40 seconds
 
-Use a deployed AWS workspace and real, permitted mess data. Keep sample labels and real n visible. The alternative script below fits the currently available after-only photo evidence. Use the paired-photo scoring script only after collecting valid pairs, saving real human reviews, and verifying successful model inference; rehearse its actual latency before recording.
+Team: **crypto_knights**. Demonstrate the working AWS tracker and the available field observations. Bedrock troubleshooting is outside this final demo; no successful inference or AI evaluation has been verified.
 
-**Current access status, 11 October 2026:** AWS hosting, authenticated storage, photo retrieval, and human reviews passed the live checks. Bedrock inference is blocked with `ValidationException: Operation not allowed`. Use the scoring script below only after a successful real inference. If access remains blocked, use this 2:45 alternative:
+## Prepare before recording
 
-**Current field-photo evidence:** two real post-meal lunch photos from two different students are attached to the 8 October daily record in the private AWS workspace. They are after-only observations, not a paired-photo evaluation. Show them in **Photo journal** and confirm provider permission before public use. The 87 kg is a separate daily waste measurement with unconfirmed meal coverage; do not call it the Thursday lunch total.
+- Open [MessWise](https://pilot.d3b3z2kcn310jh.amplifyapp.com), complete sign-in in **Data & AWS**, and open the private AWS workspace. Complete any first-login password change before recording. Use the administrator-provided login; credentials are not in the repository.
+- Check the dashboard shows seven daily records totalling 603 kg and that Thursday's record contains the two post-meal photos. Sample mode contains fictional examples and must not be presented as field evidence.
+- Obtain the photo providers' permission if showing the images publicly. If permission is unavailable, demonstrate the workflow without displaying their images and revise the narration accordingly.
+- Prepare AWS console tabs for the application's DynamoDB table, a private S3 photo object and the Lambda log group /aws/lambda/messwise-pilot-api in us-east-1.
+- Complete authentication beforehand and keep credentials and API keys outside the recording.
 
-| Time | Show | Suggested narration |
+## Record
+
+| Time | Screen | Narration |
 | --- | --- | --- |
-| 0:00–0:15 | Dashboard and source notes | The mess participant confirmed seven measured daily waste figures. MessWise keeps them beside the menu, supporting observations and a follow-up action. |
-| 0:15–0:50 | Save a real entry in AWS mode and refresh | We record the reported weight, menu and what its coverage is known to include. Unconfirmed scope stays visible; attendance is optional. |
-| 0:50–1:20 | Weekly menu and the two real post-meal photos in Photo journal | These are two different students' Thursday lunch plates after eating. Photos document visible leftovers; daily kilograms come from the reported measurement. |
-| 1:20–1:45 | Thursday record and its observation notes | Original serving photos were not supplied, so these observations have no percentage-left scores or plate weights. The 87 kg is the separately reported daily total, with meal coverage still unconfirmed. |
-| 1:45–2:20 | DynamoDB entry, private S3 object, and Lambda invocation in CloudWatch | The app authenticates with Cognito and stores records and photos on AWS. These are the real saved record and request log. |
-| 2:20–2:45 | Action, follow-up status, and public repository | Record an action to try and compare later measurements. Any reduction claim still needs field evidence. |
+| 0:00-0:20 | Dashboard in AWS workspace | "I'm crypto_knights, building MessWise for campus mess food waste. The app keeps reported waste weights, dated menus, supporting observations and follow-up tracking together." |
+| 0:20-0:50 | Open Thursday in Daily log, save without changing its reported weight, then refresh | "This workspace contains seven participant-confirmed measured daily weights, totalling 603 kilograms. Thursday's separately reported 87 kilograms has its matching menu. Waste type and meal coverage remain unconfirmed, and the app preserves that uncertainty." |
+| 0:50-1:20 | Photo journal; open the two Thursday lunch images if permission is confirmed | "These are two different students' plates after lunch. They are real observations stored with the daily record. We have no original serving photos or weighed leftovers, so these images have no percentage-left scores or waste mass." |
+| 1:20-1:40 | Daily record's action fields or Action plan | "The action tracker can record a change, its status and a follow-up note. Staff feedback and an intervention are the next field test; we haven't established waste reduction yet." |
+| 1:40-2:20 | Matching saved record in DynamoDB, private S3 object and Lambda invocation/log timestamp | "Amplify hosts the app. Cognito authenticates the workspace; API Gateway and Lambda save records in DynamoDB. Photos are private in S3 with signed access. Here is the saved record and its photo storage on AWS. Thirteen live API checks passed during deployment verification." |
+| 2:20-2:40 | Return to app, then public repository | "The core tracker is deployed and working. Optional Bedrock scoring is implemented, but account access is blocked and no AI result is claimed. Our next step is a staff-backed trial with comparable follow-up measurements. The source and credits are public." |
 
-Use only collected observations and genuine feedback in either script. If a feature has no real pilot evidence, demonstrate its workflow without claiming an outcome.
+Show the actual AWS save and reload. Keep the 87 kg daily figure separate from the two lunch observations. Do not enter a fictional staff agreement or completed action into the real workspace for the recording.
 
-| Time | Show | Suggested narration |
-| --- | --- | --- |
-| 0:00–0:15 | Published waste notice and dashboard | Our mess already publishes daily waste kilograms. MessWise connects that number to its menu, evidence, and a follow-up action. |
-| 0:15–0:40 | Save a real daily entry in AWS mode; refresh | We record the published weight and what it covers. Attendance stays optional. |
-| 0:40–1:05 | Plate pilot: before/after images, dish list, two locked human reviews | Two people independently score the original serving left in quarter steps. Ratings are saved before the model; unclear dishes can be marked cannot assess. |
-| 1:05–1:35 | Run Bedrock scoring on the prepared pair; show the returned result | Lambda sends the paired images and dish names to Nova Lite on Bedrock. Human scores and student feedback are withheld. Daily kilograms still come from the mess notice. |
-| 1:35–2:00 | Pilot comparison table and the prepared repeated pair | Here are actual plate and dish-rating counts, exact agreement, agreement within one step, and excluded cases. The second run checks repeatability. Dishes on one plate are related observations. |
-| 2:00–2:30 | DynamoDB saved entry/pair and CloudWatch scored request metadata | These records are persisted in DynamoDB. This log shows a real Bedrock request, its model and prompt version, and token usage. Photos are private in S3. |
-| 2:30–2:45 | Action status and repository link | Students' comments help explain leftovers. Staff can record an action to try and review later measurements. Sustained waste reduction remains to be measured. |
+## Finish
 
-Only show evaluation numbers collected from the real pilot. Resolve model access and deployment before recording. Show the actual returned result and scored CloudWatch log; a health check or architecture diagram does not demonstrate inference. Show saved human reviews and explain the collection order instead of typing both during the video.
-
-Record the smallest console areas needed to show AWS working. Exclude credentials and identifying faces, verify readability on a phone, upload to YouTube as public or unlisted, and open the final link signed out. Submit the repository, video, and verified writeup through the event's own form before its displayed deadline.
+Upload to YouTube as public or unlisted. Confirm the final duration is under three minutes and that its link opens in a signed-out browser. Add the link to [SUBMISSION.md](SUBMISSION.md), then submit the repository, video and writeup through the [event form](https://www.wemakedevs.org/aws/env/submit) before its displayed deadline.

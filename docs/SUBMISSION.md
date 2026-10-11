@@ -1,72 +1,43 @@
-# MessWise submission draft
+# MessWise
 
-Replace every bracketed field with a verified fact before submitting. Keep the writeup aligned with the recorded demo.
+**Team:** crypto_knights (solo entrant)
 
 **Track:** Waste and Energy
 
-**Team:** [team name; solo entrant name]
+**Repository:** https://github.com/adityak1609/messwise
 
-**Public repository:** [adityak1609/messwise](https://github.com/adityak1609/messwise)
+**Application:** https://pilot.d3b3z2kcn310jh.amplifyapp.com
 
-**YouTube demo, under three minutes:** [URL]
+**YouTube demo:** Pending; add the public or unlisted video URL before submitting.
 
-**Hosted application:** [MessWise on AWS Amplify](https://pilot.d3b3z2kcn310jh.amplifyapp.com)
+## Problem and build
 
-## Problem
+Our campus mess publishes food-waste weights, but daily numbers are hard to connect to menus, supporting observations and follow-up actions. MessWise keeps that information together so staff can review records and track changes they choose to try.
 
-Our campus mess publishes daily food-waste figures, but a number on a board is hard to connect to menus, supporting observations, and a specific follow-up action. MessWise helps staff keep that evidence together without requiring sensors or individual plate weighing.
+During Environmental Hacks, 8-11 October 2026, we built a React and TypeScript app with a daily waste log, dashboard, dated menus, photo journal, action/status/follow-up tracker and JSON exports. Separate sample, device-local and private AWS workspaces support exploration and actual recordkeeping. The Food Court 2 menu for 5-11 October is a dated [TikMenu snapshot](https://tikmit.com/week/full?id=2026-10-05_to_2026-10-11), with source credit retained.
 
-## What I built during the event
+## AWS
 
-A React and TypeScript app to record the date, published waste weight, menu, scope and meal coverage; attach source and supporting photos; review daily records; and track an action and follow-up. Attendance is optional and its denominator is explicit. The app includes a browser-only mode for trying the workflow and an AWS integration for authenticated storage.
+Amplify hosts the frontend. Cognito authenticates the private workspace; API Gateway calls Lambda; DynamoDB stores records; and private S3 storage serves photos through signed access. The deployment uses us-east-1.
 
-An optional plate pilot stores paired photos and a dish list. Two people save independent ratings before Amazon Nova Lite scores visual leftovers in quarter steps, with a "cannot assess" option. A second model run checks repeatability. The table reports exact/within-step agreement, excluded cases, and separate plate/dish counts. [Fill in real counts and results only after collecting and evaluating the pilot.]
+Thirteen live API checks passed on 11 October, covering authentication, save/reload, private photos, user isolation and paired-photo reviews. Disposable technical test data was removed. The real records were saved and reloaded, and both real image files were retrieved unchanged from AWS.
 
-[Confirm the features above against the final video. Add event dates and link relevant commits. Describe any starter code or pre-event material actually used.]
+Optional paired-photo review and Bedrock scoring are implemented, but Nova Lite inference is blocked on this account with NOT_AUTHORIZED / Operation not allowed. No successful AI analysis or model accuracy is claimed. The daily tracker and photo journal are the working core.
 
-## Where AWS fits
+## Evidence and limits
 
-Hosting, first-login/password setup, record save/reload, private photo upload/retrieval, user isolation, and paired-photo human reviews were rechecked with disposable technical data on 11 October 2026; all 13 live API checks passed. Those test records were removed and are not field evidence. Bedrock reports `NOT_AUTHORIZED`, and a minimal direct Converse request returns `ValidationException: Operation not allowed`; do not claim a successful inference until it is verified and shown in the demo. If access remains blocked at submission time, describe model scoring as implemented but unavailable on this account, and demonstrate the working tracker and human-review workflow.
+The private workspace contains seven participant-confirmed measured daily weights for 5-11 October: **603 kg total**, **86.1 kg/day**. The source is a participant-supplied weekly table; the original mess notice/register has not been attached. Waste composition and covered meals remain unconfirmed.
 
-The frontend is hosted on AWS Amplify. Cognito authenticates the pilot login. API Gateway sends record requests to a Node.js Lambda function, which stores records in DynamoDB. Source and plate photos are held in a private S3 bucket using signed upload/download access. The video shows [timestamp] saving and reloading a record, that record in DynamoDB, and a Lambda invocation in CloudWatch.
+Two after-eating photos from different students' Thursday lunch plates are attached to the 8 October record. Its **87 kg** is a separately reported daily total. The photos provide context; original servings and plate weights were not supplied, so no percentage-left scores or mass estimates are assigned.
 
-[Include only if demonstrated:] The paired-photo endpoint calls Amazon Bedrock's Nova Lite model in [model region], withholding human ratings and feedback. The video shows [timestamp] a real inference result and its CloudWatch request metadata. Pilot model/prompt version: [actual values from the exported evaluation].
+Distinct-student counts and source percentages remain notes rather than verified meal-serving or cooked-food metrics. No paired-photo field evaluation, staff adoption, agreed intervention or measured waste reduction has been established.
 
-**Deployment region:** `us-east-1`
+## Credits
 
-**Verified on:** 11 October 2026 (technical deployment checks, seven user-supplied daily weights saved/reloaded, and two real post-meal photos attached with private retrieval verified; Bedrock scoring, plate evaluation, and follow-up outcomes still pending)
+AI tools used: **OpenAI Codex** for planning, implementation, documentation and verification; **Claude** for idea comparison and scope planning; **Amazon Q Developer** for AWS setup/troubleshooting advice.
 
-**AWS evidence in video:** [timestamp]
+Dependencies and licences are credited in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). Menu credit: Aadit Agrawal's TikMenu/fc-menu project. Daily weights and student photos were supplied by the mess participant. Original photo files remain private and are not in the public repository.
 
-Do not claim AWS deployment from local storage mode or from the presence of infrastructure files alone.
+---
 
-## Pilot evidence and limits
-
-- Source of daily weights: a weekly table supplied by the mess participant, who confirmed that all seven weights are measured. The original mess notice/register has not been attached to these records.
-- Dates and count of daily records: 5–11 October 2026, n = 7. Total reported waste: 603 kg; mean: 86.1 kg per recorded day. All seven records were saved and reloaded from the private AWS workspace.
-- Weight scope and covered meals: unconfirmed; recorded explicitly in each entry.
-- Student counts refer to distinct students during each day, not meal servings. They are retained in notes and excluded from grams-per-meal calculations.
-- Supporting plate observations: n = 2 after-eating photos from two different students' Thursday lunch plates, dated 8 October within the participant's supplied week. Both are attached to the private daily record and verified through S3 retrieval. The participant confirmed their post-meal status and that they depict different students' plates. These are a convenience sample. [Confirm the photo providers' permission before public demo use.]
-- Paired-photo evaluation: not yet collected. The two after-only photographs are not before/after pairs; no original serving photos or weighed leftovers were supplied. Their presence does not assign any share of the separately reported 87 kg daily total to lunch or these plates.
-- Human ratings, model agreement and repeatability: not yet evaluated; there are no real paired-photo human reviews or model runs. [Replace with actual counts and denominators only after collecting and evaluating valid pairs.]
-- Staff feedback or proposed action: [actual feedback/action, or “not yet collected”].
-- Follow-up observation: [actual result with comparable scope, or “not yet collected”].
-
-Photos supply context; the app does not estimate food mass from images. Daily totals cannot identify a particular dish as the cause. Sample data is labelled and excluded from claims about field results. A short pilot does not establish sustained waste reduction or causality. No forecast, emissions savings, or monetary savings are claimed.
-
-The supplied table also lists percentages relative to cooked food, but no cooked-weight denominator was provided. These percentages remain source context in record notes and are not verified app metrics. Menu-based explanations of why a dish increases or reduces waste are not presented as observed causes. The dated menu is from [TikMenu's Food Court 2 week of 5–11 October](https://tikmit.com/week/full?id=2026-10-05_to_2026-10-11).
-
-## Tools and credits
-
-AI assistance used: **OpenAI Codex** for implementation and documentation, and **Claude** for the earlier idea and scope discussion. [Add any other AI tools actually used and revise descriptions as needed.]
-
-The build uses open-source dependencies credited in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), including React, Vite, TypeScript, Lucide, and the AWS SDK. Photos and menu/notice content: [name the source and confirm permission; anonymise if appropriate]. Original project code licence: [owner's selected licence; add the licence file if choosing one].
-
-## Final submission check
-
-- Public repository opens without signing in, and its history reflects the event work.
-- Source code, third-party credits, and an appropriate original-code licence decision are included.
-- YouTube video is under three minutes and opens signed out.
-- AWS is shown performing a real operation in the video.
-- All placeholders are replaced; measured outcomes are backed by the recorded data.
-- Submit once for the team through the hackathon's own form before its displayed deadline.
+Before submitting: add the YouTube URL, confirm the photo providers' permission if showing their images publicly, and keep this writeup aligned with the recorded demo. Submit the repository, video and writeup through the [event form](https://www.wemakedevs.org/aws/env/submit) before its displayed deadline. The video must be under three minutes, public or unlisted, open signed out, and show AWS performing a real operation.

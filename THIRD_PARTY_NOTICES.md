@@ -33,12 +33,12 @@ The seven demonstration records are fictional examples created for this app, exp
 
 The dated Food Court 2 menu for 5–11 October 2026 was supplied by the user through [Tikmit / Food Court Menus](https://tikmit.com/week/full?id=2026-10-05_to_2026-10-11), created by Aadit Agrawal. Dish names were extracted from that site's public menu bundle; source provenance is retained in `src/data/weekly-menu.json`. This is published menu information, not measured waste. No website implementation code was copied. The upstream [fc-menu repository](https://github.com/aaditagrawal/fc-menu) uses the MIT licence; its full notice is retained in `docs/licenses/fc-menu-MIT.txt` and included in the frontend notices.
 
-Real menu information, measurements, and photo ownership should be credited to their actual source when collected. Obtain permission to use friends' photographs and avoid identifying people in public submission materials.
+The private AWS pilot workspace also contains seven daily weights supplied and confirmed as measured by a mess participant for 5-11 October 2026. They are distinct from the fictional sample records. Two after-eating photos supplied by that participant show two different students' Thursday lunch plates; the original image files remain private and are not part of the public repository. The original mess notice/register and the photographers' identities have not been supplied. Confirm the photo providers' permission before showing their images in public submission materials.
 
 Food-waste measurement principles were informed by [EPA's food-waste assessment guidance](https://www.epa.gov/sustainable-management-food/tools-preventing-and-diverting-wasted-food). The app does not reproduce its toolkit or illustrations.
 
 ## AI assistance
 
-OpenAI Codex was used for project planning, implementation, and verification. The owner also used Claude for idea comparison and scope planning. The optional plate pilot uses Amazon Nova Lite through Amazon Bedrock for coarse visual scores. Its output is not a measured food weight.
+OpenAI Codex was used for project planning, implementation, documentation, and verification. The owner also used Claude for idea comparison and scope planning, and Amazon Q Developer for AWS setup/troubleshooting advice. The optional plate pilot implements an Amazon Nova Lite integration through Amazon Bedrock for coarse visual scores, but inference is blocked on this account and no successful model analysis is claimed. Visual scores would not be measured food weights.
 
 The photo-scoring protocol was informed by [Ni et al.'s 2025 conference abstract](https://nsa-2025.p.asnevents.com.au/days/2025-12-04/abstract/129505) and [Parent et al. (2012)](https://experts.mcmaster.ca/scholarly-works/657546). The prompt, five-bin adaptation, collection UI, and evaluation calculations are original project work. These studies evaluated human rating methods, not this model.
